@@ -437,6 +437,7 @@ tr:hover td { background: #fff8f0; }
   vertical-align: middle; margin-right: 6px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
 
 /* Toast */
 #toast {
@@ -516,8 +517,8 @@ tr:hover td { background: #fff8f0; }
 
     <!-- Tab bar -->
     <div class="tab-bar">
-      <button class="tab-btn active" id="tab-single" onclick="switchTab('single')">👤 Single Register</button>
-      <button class="tab-btn" id="tab-bulk" onclick="switchTab('bulk')">📄 Bulk Upload (PDF)</button>
+      <button class="tab-btn active" id="tab-single" onclick="switchTab('single')">👤 Single</button>
+      <button class="tab-btn" id="tab-group" onclick="switchTab('group')">👥 Group Register</button>
     </div>
 
     <!-- SINGLE REGISTRATION -->
@@ -550,46 +551,27 @@ tr:hover td { background: #fff8f0; }
       <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
     </div>
 
-    <!-- BULK PDF UPLOAD -->
-    <div class="form-body" id="panelBulk" style="display:none;">
-      <h2>Bulk Group Registration</h2>
-      <p class="section-hint">Upload a PDF list to register multiple participants at once.</p>
+    <!-- GROUP REGISTRATION -->
+    <div class="form-body" id="panelGroup" style="display:none;">
+      <h2>Group Registration</h2>
+      <p class="section-hint">Add participants one by one, then submit all at once.</p>
 
-      <div class="template-note">
-        <strong>📋 PDF Format Required:</strong><br>
-        Your PDF must contain a table or list with these columns in order:<br>
-        <code style="background:#fff3cd;padding:2px 6px;border-radius:4px;font-size:0.95em;">Full Name | Age | Church | Contact Number</code><br><br>
-        One participant per row. The system will read the text from your PDF.<br>
-        <a href="#" onclick="downloadTemplate(); return false;">⬇ Download sample template (CSV)</a>
-      </div>
+      <!-- Participant rows container -->
+      <div id="groupRows"></div>
 
-      <div class="upload-zone" id="uploadZone">
-        <input type="file" id="pdfFile" accept=".pdf" onchange="handlePDFUpload(this)">
-        <span class="upload-icon">📄</span>
-        <p><strong>Click or drag & drop</strong> your PDF here</p>
-        <p style="margin-top:4px;font-size:0.8em;color:#aaa;">Accepted: .pdf files only</p>
-        <div class="file-name" id="fileName"></div>
-      </div>
+      <!-- Add another button -->
+      <button id="addRowBtn" type="button" style="
+        width:100%; margin-top:14px; padding:11px;
+        border: 2px dashed var(--orange); border-radius:10px;
+        background:#fff8f0; color:var(--orange-dk);
+        font-family:'Black Han Sans',sans-serif; font-size:0.9em;
+        letter-spacing:1px; cursor:pointer; transition:background 0.2s;
+      ">➕ ADD ANOTHER PERSON</button>
 
-      <div class="preview-wrap" id="previewWrap">
-        <h3>👥 Participants Found (<span id="previewCount">0</span>)</h3>
-        <div class="preview-table-wrap">
-          <table class="preview-table">
-            <thead>
-              <tr>
-                <th>#</th><th>Name</th><th>Age</th><th>Church</th><th>Contact</th><th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="previewBody"></tbody>
-          </table>
-        </div>
-      </div>
+      <!-- Summary count -->
+      <div id="groupCount" style="text-align:center;margin-top:10px;font-size:0.82em;color:#888;font-weight:700;"></div>
 
-      <div class="upload-summary" id="uploadSummary"></div>
-
-      <button class="btn-primary" id="bulkSubmitBtn" onclick="registerBulk()" style="display:none;">
-        🚧 REGISTER ALL PARTICIPANTS
-      </button>
+      <button class="btn-primary" id="groupSubmitBtn">🚧 REGISTER ALL</button>
       <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
     </div>
   </div>
@@ -726,11 +708,6 @@ tr:hover td { background: #fff8f0; }
   </div>
 </div>
 
-<!-- PDF.js library for parsing PDF text -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -765,7 +742,7 @@ const teams = [
 ];
 
 let allParticipants = {};
-let parsedBulkData  = [];
+
 
 // ── Helpers ────────────────────────────────────────────────────
 function showToast(msg, duration = 3000) {
@@ -789,9 +766,12 @@ function show(id, display="block") { const el = document.getElementById(id); if 
 // ── Tab switch ─────────────────────────────────────────────────
 window.switchTab = function(tab) {
   document.getElementById("panelSingle").style.display = tab === "single" ? "block" : "none";
-  document.getElementById("panelBulk").style.display   = tab === "bulk"   ? "block" : "none";
+  document.getElementById("panelGroup").style.display  = tab === "group"  ? "block" : "none";
   document.getElementById("tab-single").classList.toggle("active", tab === "single");
-  document.getElementById("tab-bulk").classList.toggle("active", tab === "bulk");
+  document.getElementById("tab-group").classList.toggle("active",  tab === "group");
+  if (tab === "group" && document.getElementById("groupRows").children.length === 0) {
+    addGroupRow();
+  }
 };
 
 // ── Reset to register ──────────────────────────────────────────
@@ -865,182 +845,138 @@ window.register = async function () {
 };
 
 
-// ── PDF parsing ────────────────────────────────────────────────
-window.handlePDFUpload = async function (input) {
-  if (!input.files || !input.files[0]) return;
-  const file = input.files[0];
-  document.getElementById("fileName").textContent = "📄 " + file.name;
-  document.getElementById("fileName").style.display = "block";
+// ── Group registration ─────────────────────────────────────────
+let groupRowCount = 0;
 
-  // Read PDF text using PDF.js
-  const arrayBuffer = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+function updateGroupCount() {
+  const count = document.getElementById("groupRows").children.length;
+  const el = document.getElementById("groupCount");
+  el.textContent = count === 1 ? "1 person added" : `${count} people added`;
+}
 
-  let fullText = "";
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    const strings = content.items.map(item => item.str);
-    fullText += strings.join(" ") + "\n";
-  }
+function addGroupRow() {
+  groupRowCount++;
+  const id = groupRowCount;
+  const container = document.getElementById("groupRows");
 
-  // Parse rows — try to find lines with name | age | church | contact patterns
-  parsedBulkData = parsePDFText(fullText);
-  renderPreview(parsedBulkData);
+  const row = document.createElement("div");
+  row.id = "grow-" + id;
+  row.style.cssText = "background:#fff8f0;border:2px solid var(--orange);border-radius:12px;padding:14px 14px 10px;margin-bottom:12px;position:relative;animation:fadeIn 0.2s ease;";
+  row.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span style="font-family:'Black Han Sans',sans-serif;font-size:0.85em;color:var(--orange-dk);letter-spacing:0.5px;">👤 PERSON ${id}</span>
+      ${id > 1 ? `<button onclick="removeGroupRow(${id})" style="background:none;border:none;cursor:pointer;font-size:1.1em;color:#aaa;line-height:1;" title="Remove">✕</button>` : ''}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 80px;gap:8px;margin-bottom:8px;">
+      <div>
+        <label style="font-size:0.78em;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--black);display:block;margin-bottom:3px;">Full Name *</label>
+        <input id="g-name-${id}" type="text" placeholder="Full name" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;">
+      </div>
+      <div>
+        <label style="font-size:0.78em;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--black);display:block;margin-bottom:3px;">Age *</label>
+        <input id="g-age-${id}" type="number" min="1" max="99" placeholder="Age" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div>
+        <label style="font-size:0.78em;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--black);display:block;margin-bottom:3px;">Church *</label>
+        <input id="g-church-${id}" type="text" placeholder="Church" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;">
+      </div>
+      <div>
+        <label style="font-size:0.78em;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--black);display:block;margin-bottom:3px;">Contact *</label>
+        <input id="g-contact-${id}" type="tel" placeholder="09xxxxxxxxx" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;">
+      </div>
+    </div>
+    <div id="g-err-${id}" style="color:var(--red);font-size:0.78em;font-weight:700;margin-top:6px;display:none;"></div>
+  `;
+  container.appendChild(row);
+  updateGroupCount();
+
+  // Focus the name field of the new row
+  setTimeout(() => document.getElementById("g-name-" + id)?.focus(), 50);
+}
+
+window.removeGroupRow = function(id) {
+  const el = document.getElementById("grow-" + id);
+  if (el) el.remove();
+  updateGroupCount();
 };
 
-function parsePDFText(text) {
-  const results = [];
-  // Split into lines
-  const lines = text.split(/\n|;/).map(l => l.trim()).filter(l => l.length > 3);
+// Wire up add row and submit buttons inside module scope
+document.getElementById("addRowBtn").addEventListener("click", addGroupRow);
 
-  for (const line of lines) {
-    // Try pipe-separated: Name | Age | Church | Contact
-    const pipeParts = line.split(/\|/).map(s => s.trim());
-    if (pipeParts.length >= 4) {
-      const [name, age, church, contact] = pipeParts;
-      if (isValidName(name) && isValidAge(age)) {
-        results.push({ name, age: parseInt(age), church: church || "—", contact: contact || "—", valid: true });
-        continue;
-      }
-    }
+document.getElementById("groupSubmitBtn").addEventListener("click", async function () {
+  const btn = this;
+  const container = document.getElementById("groupRows");
+  const rows = container.querySelectorAll("[id^='grow-']");
 
-    // Try comma-separated
-    const commaParts = line.split(/,/).map(s => s.trim());
-    if (commaParts.length >= 4) {
-      const [name, age, church, contact] = commaParts;
-      if (isValidName(name) && isValidAge(age)) {
-        results.push({ name, age: parseInt(age), church: church || "—", contact: contact || "—", valid: true });
-        continue;
-      }
-    }
-
-    // Try tab-separated
-    const tabParts = line.split(/\t/).map(s => s.trim());
-    if (tabParts.length >= 4) {
-      const [name, age, church, contact] = tabParts;
-      if (isValidName(name) && isValidAge(age)) {
-        results.push({ name, age: parseInt(age), church: church || "—", contact: contact || "—", valid: true });
-        continue;
-      }
-    }
-
-    // Try space-heuristic: if line has a number in it (potential age)
-    const spaceMatch = line.match(/^(.+?)\s+(\d{1,2})\s+(.+?)\s+([\d\+\-\s]{7,15})$/);
-    if (spaceMatch) {
-      const [, name, age, church, contact] = spaceMatch;
-      if (isValidName(name) && isValidAge(age)) {
-        results.push({ name: name.trim(), age: parseInt(age), church: church.trim(), contact: contact.trim(), valid: true });
-      }
-    }
-  }
-
-  return results;
-}
-
-function isValidName(s) {
-  return s && /^[A-Za-zÀ-ÖØ-öø-ÿ\s\.\-\']{2,60}$/.test(s) && isNaN(s);
-}
-function isValidAge(s) {
-  const n = parseInt(s);
-  return !isNaN(n) && n >= 1 && n <= 99;
-}
-
-function renderPreview(data) {
-  const wrap = document.getElementById("previewWrap");
-  const body = document.getElementById("previewBody");
-  const countEl = document.getElementById("previewCount");
-  const bulkBtn = document.getElementById("bulkSubmitBtn");
-
-  if (data.length === 0) {
-    showToast("⚠️ No valid participants found in PDF. Check the format.", 5000);
-    wrap.style.display = "none";
-    bulkBtn.style.display = "none";
+  if (rows.length === 0) {
+    showToast("⚠️ Add at least one person first.");
     return;
   }
 
-  countEl.textContent = data.length;
-  body.innerHTML = "";
-  data.forEach((p, i) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td style="color:#888">${i+1}</td>
-      <td style="font-weight:700">${esc(p.name)}</td>
-      <td>${p.age}</td>
-      <td>${esc(p.church)}</td>
-      <td>${esc(p.contact)}</td>
-      <td><span class="preview-badge ${p.valid ? '' : 'err'}">${p.valid ? "✔ Ready" : "⚠ Check"}</span></td>`;
-    body.appendChild(row);
-  });
+  // Validate all rows first
+  let hasError = false;
+  const people = [];
+  for (const row of rows) {
+    const rowId = row.id.replace("grow-", "");
+    const name    = document.getElementById("g-name-"    + rowId)?.value.trim();
+    const age     = document.getElementById("g-age-"     + rowId)?.value.trim();
+    const church  = document.getElementById("g-church-"  + rowId)?.value.trim();
+    const contact = document.getElementById("g-contact-" + rowId)?.value.trim();
+    const errEl   = document.getElementById("g-err-"     + rowId);
 
-  wrap.style.display = "block";
-  bulkBtn.style.display = "block";
-}
+    const errs = [];
+    if (!name)    errs.push("name");
+    if (!age || age < 1 || age > 99) errs.push("age");
+    if (!church)  errs.push("church");
+    if (!/^[\d\s\+\-]{7,15}$/.test(contact)) errs.push("contact");
 
-// ── Bulk register ──────────────────────────────────────────────
-window.registerBulk = async function () {
-  if (!parsedBulkData.length) return;
-  const btn = document.getElementById("bulkSubmitBtn");
+    // Highlight invalid fields
+    ["name","age","church","contact"].forEach(f => {
+      const el = document.getElementById(`g-${f}-${rowId}`);
+      if (el) el.style.borderColor = errs.includes(f) ? "var(--red)" : "#ddd";
+    });
+
+    if (errs.length > 0) {
+      errEl.textContent = "⚠ Please fill in: " + errs.join(", ");
+      errEl.style.display = "block";
+      hasError = true;
+    } else {
+      errEl.style.display = "none";
+      people.push({ name, age: Number(age), church, contact });
+    }
+  }
+
+  if (hasError) {
+    showToast("⚠️ Please fix the errors highlighted in red.", 4000);
+    return;
+  }
+
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Registering…';
 
   let success = 0, skipped = 0;
-
-  for (const p of parsedBulkData) {
-    if (!p.valid) { skipped++; continue; }
-    const dup = await isDuplicate(p.name, p.contact !== "—" ? p.contact : null);
+  for (const p of people) {
+    const dup = await isDuplicate(p.name, p.contact);
     if (dup) { skipped++; continue; }
     const teamName = await getBalancedTeam();
-    await push(participantsRef, {
-      name: p.name, age: p.age, church: p.church,
-      contact: p.contact !== "—" ? p.contact : "",
-      team: teamName, paid: false
-    });
+    await push(participantsRef, { ...p, team: teamName, paid: false });
     success++;
   }
 
   btn.disabled = false;
-  btn.textContent = "🚧 REGISTER ALL PARTICIPANTS";
+  btn.innerHTML = "🚧 REGISTER ALL";
 
+  // Show success screen
   document.getElementById("bulkSuccessMsg").textContent =
-    `${success} participant${success !== 1 ? "s" : ""} registered! ${skipped ? `(${skipped} skipped as duplicates)` : ""}`;
-
+    `${success} participant${success !== 1 ? "s" : ""} registered!${skipped ? ` (${skipped} skipped — already registered)` : ""}`;
   hide("registerPage");
   show("bulkResultWrap");
-  parsedBulkData = [];
-};
 
-// ── Download template ──────────────────────────────────────────
-window.downloadTemplate = function () {
-  const csv = `Full Name,Age,Church,Contact Number
-Juan dela Cruz,18,Bible Baptist Church Manila,09171234567
-Maria Santos,16,Grace Baptist Church,09281234567
-Pedro Reyes,20,Living Word Baptist,09391234567`;
-  const blob = new Blob([csv], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "UFBBC_Registration_Template.csv"; a.click();
-  URL.revokeObjectURL(url);
-  showToast("✅ Template downloaded!");
-};
-
-// ── Drag & drop visual ─────────────────────────────────────────
-const uploadZone = document.getElementById("uploadZone");
-uploadZone.addEventListener("dragover", e => { e.preventDefault(); uploadZone.classList.add("dragover"); });
-uploadZone.addEventListener("dragleave", () => uploadZone.classList.remove("dragover"));
-uploadZone.addEventListener("drop", e => {
-  e.preventDefault();
-  uploadZone.classList.remove("dragover");
-  const f = e.dataTransfer.files[0];
-  if (f && f.type === "application/pdf") {
-    const input = document.getElementById("pdfFile");
-    const dt = new DataTransfer();
-    dt.items.add(f);
-    input.files = dt.files;
-    window.handlePDFUpload(input);
-  } else {
-    showToast("⚠️ Please drop a PDF file.");
-  }
+  // Reset group rows for next use
+  document.getElementById("groupRows").innerHTML = "";
+  groupRowCount = 0;
 });
 
 // ── Admin login/logout ─────────────────────────────────────────
