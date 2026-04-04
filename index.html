@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UFBBC Youth Camp Registration</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --orange:    #E8820C;
+  --orange-dk: #C06A08;
+  --orange-lt: #FBAD3A;
+  --black:     #1A1008;
+  --white:     #FFFDF8;
+  --caution:   #F5C800;
+  --red:       #b71c1c;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--orange);
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 28px,
+      rgba(0,0,0,0.06) 28px,
+      rgba(0,0,0,0.06) 56px
+    );
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 12px 40px;
+}
+
+/* ── Caution tape stripe ── */
+.caution-tape {
+  background: var(--caution);
+  color: var(--black);
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.85em;
+  letter-spacing: 3px;
+  padding: 7px 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  border-top: 3px solid var(--black);
+  border-bottom: 3px solid var(--black);
+  margin-bottom: 0;
+  user-select: none;
+  position: relative;
+}
+.caution-tape span {
+  display: inline-block;
+  animation: scroll-tape 18s linear infinite;
+}
+@keyframes scroll-tape {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.container {
+  width: 100%;
+  max-width: 580px;
+  background: var(--white);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 0 4px var(--black);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* ── Header banner ── */
+.header-banner {
+  background: var(--black);
+  padding: 22px 28px 18px;
+  text-align: center;
+  position: relative;
+}
+.header-banner img.logo {
+  height: 54px;
+  filter: brightness(0) invert(1);
+  margin-bottom: 8px;
+}
+.header-banner h1 {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 1.55em;
+  color: var(--caution);
+  letter-spacing: 1px;
+  line-height: 1.15;
+  margin-bottom: 4px;
+  text-shadow: 2px 2px 0 var(--orange-dk);
+}
+.header-banner p.sub {
+  font-size: 0.78em;
+  color: var(--white);
+  opacity: 0.7;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── Tab switcher ── */
+.tab-bar {
+  display: flex;
+  border-bottom: 3px solid var(--black);
+}
+.tab-btn {
+  flex: 1;
+  padding: 13px 8px;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.92em;
+  letter-spacing: 1px;
+  background: #f0ede6;
+  color: #888;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border-right: 2px solid var(--black);
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active {
+  background: var(--orange);
+  color: var(--black);
+}
+.tab-btn:hover:not(.active) { background: #e0dbd0; }
+
+/* ── Form body ── */
+.form-body { padding: 26px 28px 28px; }
+
+h2 {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 1.2em;
+  color: var(--black);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+.section-hint {
+  font-size: 0.82em;
+  color: #888;
+  margin-bottom: 18px;
+}
+
+.form-group { margin-top: 14px; }
+
+label {
+  font-weight: 700;
+  display: block;
+  font-size: 0.88em;
+  color: var(--black);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  font-size: 0.97em;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
+  color: var(--black);
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232,130,12,0.18);
+}
+input.error, select.error { border-color: var(--red); }
+.error-msg { color: var(--red); font-size: 0.8em; margin-top: 4px; display: none; font-weight: 600; }
+.error-msg.show { display: block; }
+
+/* ── PDF Upload Zone ── */
+.upload-zone {
+  border: 3px dashed var(--orange);
+  border-radius: 14px;
+  padding: 28px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  background: #fff8f0;
+  margin-top: 14px;
+  position: relative;
+}
+.upload-zone:hover, .upload-zone.dragover {
+  background: #ffecd6;
+  border-color: var(--orange-dk);
+}
+.upload-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0;
+}
+.upload-icon { font-size: 2.4em; display: block; margin-bottom: 8px; }
+.upload-zone p { font-size: 0.9em; color: #666; font-weight: 600; }
+.upload-zone p strong { color: var(--orange-dk); }
+.upload-zone .file-name {
+  margin-top: 10px;
+  font-size: 0.85em;
+  color: var(--orange-dk);
+  font-weight: 700;
+  display: none;
+}
+
+/* PDF template note */
+.template-note {
+  background: #fff8e1;
+  border: 1.5px solid var(--caution);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 14px;
+  font-size: 0.83em;
+  color: #5a4000;
+  line-height: 1.5;
+}
+.template-note strong { color: #3a2800; }
+.template-note a { color: var(--orange-dk); font-weight: 700; }
+
+/* Preview table */
+.preview-wrap {
+  margin-top: 16px;
+  display: none;
+}
+.preview-wrap h3 {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.95em;
+  color: var(--black);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.preview-table-wrap { overflow-x: auto; }
+.preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82em;
+  min-width: 360px;
+}
+.preview-table th {
+  background: var(--orange);
+  color: var(--black);
+  padding: 8px 10px;
+  text-align: left;
+  font-weight: 800;
+}
+.preview-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #f0ece4;
+  color: #333;
+}
+.preview-table tr:last-child td { border-bottom: none; }
+.preview-table tr:hover td { background: #fff5e8; }
+.preview-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.78em;
+  font-weight: 700;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.preview-badge.err { background: #ffebee; color: var(--red); }
+
+/* ── Buttons ── */
+button.btn-primary {
+  width: 100%;
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: 3px solid var(--black);
+  border-radius: 12px;
+  font-size: 1em;
+  font-family: 'Black Han Sans', sans-serif;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+  background: var(--orange);
+  color: var(--black);
+  box-shadow: 4px 4px 0 var(--black);
+  text-transform: uppercase;
+}
+button.btn-primary:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); }
+button.btn-primary:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--black); }
+button.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: 4px 4px 0 var(--black); }
+
+button.btn-admin {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 16px;
+  border: 3px solid var(--black);
+  border-radius: 12px;
+  font-size: 0.92em;
+  font-family: 'Black Han Sans', sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  background: var(--black);
+  color: var(--caution);
+  box-shadow: 4px 4px 0 var(--orange-dk);
+  text-transform: uppercase;
+}
+button.btn-admin:hover { opacity: 0.85; }
+
+button.logout {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  background: var(--black);
+  color: var(--caution);
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+/* ── Result page ── */
+.result-body { padding: 28px; text-align: center; }
+.result-body img { max-width: 86%; border-radius: 14px; margin-bottom: 16px; border: 3px solid var(--black); }
+.result-body .thank-you { font-family: 'Black Han Sans', sans-serif; font-size: 1.3em; color: var(--black); margin-bottom: 6px; }
+.result-body .sub-msg { font-size: 0.9em; color: #666; margin-bottom: 14px; }
+.team-badge {
+  display: inline-block;
+  margin: 6px auto 18px;
+  padding: 10px 26px;
+  border-radius: 30px;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
+  border: 2.5px solid;
+}
+.qr-btn, .inquiry-link {
+  display: block;
+  width: fit-content;
+  margin: 10px auto;
+  padding: 12px 24px;
+  background: var(--orange);
+  color: var(--black);
+  border: 3px solid var(--black);
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.95em;
+  letter-spacing: 0.5px;
+  box-shadow: 3px 3px 0 var(--black);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.qr-btn:hover, .inquiry-link:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--black); }
+#qrcodeSection { display: none; margin-top: 10px; }
+
+/* ── Admin panel ── */
+.admin-stats {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 18px;
+}
+.stat-card {
+  flex: 1; min-width: 90px;
+  background: var(--black); border-radius: 12px;
+  padding: 12px 8px; text-align: center;
+  border: 2px solid var(--orange);
+}
+.stat-card .stat-num { font-family: 'Black Han Sans', sans-serif; font-size: 1.7em; color: var(--caution); }
+.stat-card .stat-label { font-size: 0.72em; color: #aaa; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.admin-controls {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center;
+}
+.admin-controls input[type="text"] {
+  flex: 1; min-width: 150px; padding: 10px 12px;
+  border-radius: 8px; border: 2px solid #ccc; font-size: 0.88em; font-family: 'Nunito', sans-serif;
+}
+.admin-controls select {
+  padding: 10px 8px; border-radius: 8px; border: 2px solid #ccc;
+  font-size: 0.88em; flex: 0 0 auto;
+}
+.btn-export {
+  padding: 10px 14px; background: #1565c0; color: #fff;
+  border-radius: 8px; font-size: 0.85em; font-family: 'Nunito', sans-serif;
+  font-weight: 700; border: none; cursor: pointer; white-space: nowrap;
+}
+.btn-export:hover { opacity: 0.88; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85em; min-width: 500px; }
+th { background: var(--black); color: var(--caution); padding: 10px 8px; text-align: left; font-family: 'Black Han Sans', sans-serif; font-size: 0.82em; letter-spacing: 0.5px; white-space: nowrap; }
+td { padding: 9px 8px; border-bottom: 1px solid #eee; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fff8f0; }
+
+.paid-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 0.78em; font-weight: 700; cursor: pointer; border: none; font-family: 'Nunito', sans-serif;
+}
+.paid-badge.paid   { background: #e8f5e9; color: #2e7d32; }
+.paid-badge.unpaid { background: #fff3e0; color: #e65100; }
+
+.delete-btn {
+  background: #e0e0e0; color: #333; padding: 6px 10px;
+  font-size: 0.8em; border-radius: 6px; border: none; cursor: pointer; font-family: 'Nunito', sans-serif;
+}
+.delete-btn:hover { background: #c62828; color: #fff; }
+
+.mobile-cards { display: none; }
+.participant-card {
+  background: #fafafa; border: 1px solid #eee;
+  border-radius: 12px; padding: 14px; margin-bottom: 12px; text-align: left;
+}
+.participant-card .card-name { font-weight: 800; font-size: 0.98em; color: #111; margin-bottom: 6px; }
+.participant-card .card-row { font-size: 0.83em; color: #555; margin-bottom: 3px; }
+.participant-card .card-row span { font-weight: 700; color: #222; }
+.card-actions { display: flex; gap: 8px; margin-top: 10px; align-items: center; flex-wrap: wrap; }
+
+/* ── Admin login ── */
+.admin-login-body { padding: 28px; }
+.admin-login-body h2 {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 1.3em; color: var(--black); margin-bottom: 4px;
+}
+
+/* Spinner */
+.spinner {
+  display: inline-block; width: 17px; height: 17px;
+  border: 3px solid rgba(0,0,0,0.2); border-top-color: var(--black);
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+  vertical-align: middle; margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+#toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--black); color: var(--caution);
+  padding: 12px 24px; border-radius: 30px;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.92em; letter-spacing: 0.5px;
+  z-index: 9999; transition: transform 0.3s ease; white-space: nowrap;
+  border: 2px solid var(--orange);
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Upload result summary */
+.upload-summary {
+  background: #f0fff4;
+  border: 2px solid #81c784;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 14px;
+  font-size: 0.85em;
+  color: #2e7d32;
+  font-weight: 700;
+  display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 540px) {
+  .form-body, .result-body, .admin-login-body { padding: 20px 16px; }
+  .header-banner { padding: 18px 18px 14px; }
+  .header-banner h1 { font-size: 1.25em; }
+  .table-wrap table { display: none; }
+  .mobile-cards { display: block; }
+  .admin-stats { gap: 5px; }
+  .stat-card { padding: 10px 5px; min-width: 75px; }
+  .admin-controls { flex-direction: column; }
+  .admin-controls input[type="text"],
+  .admin-controls select { width: 100%; min-width: unset; }
+  .btn-export { width: 100%; }
+  .tab-btn { font-size: 0.8em; padding: 11px 4px; }
+}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- ═══════════════════════════════════════════
+     REGISTRATION PAGE
+═══════════════════════════════════════════ -->
+<div id="registerPage" style="width:100%;max-width:580px;margin:0 auto;">
+
+  <!-- Caution Tape Top -->
+  <div class="caution-tape">
+    <span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header-banner">
+      <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div style="width:42px;height:42px;background:var(--caution);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--orange-lt);">
+          <span style="font-size:1.3em;">⛪</span>
+        </div>
+        <div style="text-align:left;">
+          <div style="font-size:0.65em;color:#aaa;letter-spacing:2px;text-transform:uppercase;">United Fellowship of Bible Baptist Churches</div>
+          <div style="font-family:'Black Han Sans',sans-serif;color:var(--caution);font-size:1em;letter-spacing:1px;">UFBBC PRESENTS</div>
+        </div>
+      </div>
+      <h1>UFBBC 1-Day Youth Camp</h1>
+      <p class="sub">🏗 Under Construction &nbsp;·&nbsp; 1 Cor 3:9 &nbsp;·&nbsp; May 12, 2026</p>
+    </div>
+
+    <!-- Caution tape divider -->
+    <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-single" onclick="switchTab('single')">👤 Single Register</button>
+      <button class="tab-btn" id="tab-bulk" onclick="switchTab('bulk')">📄 Bulk Upload (PDF)</button>
+    </div>
+
+    <!-- SINGLE REGISTRATION -->
+    <div class="form-body" id="panelSingle">
+      <h2>Register Here</h2>
+      <p class="section-hint">Fill in your details below to secure your spot!</p>
+
+      <div class="form-group">
+        <label for="name">Full Name <span style="color:var(--red)">*</span></label>
+        <input id="name" type="text" placeholder="Enter your full name" autocomplete="name">
+        <div class="error-msg" id="err-name">Please enter your full name.</div>
+      </div>
+      <div class="form-group">
+        <label for="age">Age <span style="color:var(--red)">*</span></label>
+        <input id="age" type="number" min="1" max="99" placeholder="Enter your age">
+        <div class="error-msg" id="err-age">Please enter a valid age (1–99).</div>
+      </div>
+      <div class="form-group">
+        <label for="church">Church <span style="color:var(--red)">*</span></label>
+        <input id="church" type="text" placeholder="Enter your church">
+        <div class="error-msg" id="err-church">Please enter your church.</div>
+      </div>
+      <div class="form-group">
+        <label for="contact">Contact Number <span style="color:var(--red)">*</span></label>
+        <input id="contact" type="tel" placeholder="e.g. 09xxxxxxxxx" autocomplete="tel">
+        <div class="error-msg" id="err-contact">Please enter a valid contact number.</div>
+      </div>
+
+      <button class="btn-primary" id="submitBtn" onclick="register()">🚧 SUBMIT REGISTRATION</button>
+      <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
+    </div>
+
+    <!-- BULK PDF UPLOAD -->
+    <div class="form-body" id="panelBulk" style="display:none;">
+      <h2>Bulk Group Registration</h2>
+      <p class="section-hint">Upload a PDF list to register multiple participants at once.</p>
+
+      <div class="template-note">
+        <strong>📋 PDF Format Required:</strong><br>
+        Your PDF must contain a table or list with these columns in order:<br>
+        <code style="background:#fff3cd;padding:2px 6px;border-radius:4px;font-size:0.95em;">Full Name | Age | Church | Contact Number</code><br><br>
+        One participant per row. The system will read the text from your PDF.<br>
+        <a href="#" onclick="downloadTemplate(); return false;">⬇ Download sample template (CSV)</a>
+      </div>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="pdfFile" accept=".pdf" onchange="handlePDFUpload(this)">
+        <span class="upload-icon">📄</span>
+        <p><strong>Click or drag & drop</strong> your PDF here</p>
+        <p style="margin-top:4px;font-size:0.8em;color:#aaa;">Accepted: .pdf files only</p>
+        <div class="file-name" id="fileName"></div>
+      </div>
+
+      <div class="preview-wrap" id="previewWrap">
+        <h3>👥 Participants Found (<span id="previewCount">0</span>)</h3>
+        <div class="preview-table-wrap">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th>#</th><th>Name</th><th>Age</th><th>Church</th><th>Contact</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="previewBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="upload-summary" id="uploadSummary"></div>
+
+      <button class="btn-primary" id="bulkSubmitBtn" onclick="registerBulk()" style="display:none;">
+        🚧 REGISTER ALL PARTICIPANTS
+      </button>
+      <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
+    </div>
+  </div>
+
+  <!-- Caution tape bottom -->
+  <div class="caution-tape" style="border-radius:0 0 8px 8px;">
+    <span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     THANK YOU SCREEN
+═══════════════════════════════════════════ -->
+<div style="display:none;width:100%;max-width:580px;margin:0 auto;" id="resultPageWrap">
+  <div class="caution-tape"><span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span></div>
+  <div class="container">
+    <div class="header-banner">
+      <h1>YOU'RE IN! 🎉</h1>
+      <p class="sub">Registration Confirmed</p>
+    </div>
+    <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
+    <div class="result-body" id="resultPage">
+      <img src="https://raw.githubusercontent.com/leahjasolis-source/YPG-S-REGISTRATION/main/UFBBC.jpg" alt="UFBBC Youth Camp Poster" style="max-width:92%;border-radius:14px;margin-bottom:18px;border:3px solid var(--black);" onerror="this.src='https://raw.githubusercontent.com/leahjasolis-source/YPG-S-REGISTRATION/4191949a2e1600705c1b22ba44ec8d493b0b6499/ypg.jpg'">
+      <p class="thank-you">Registration Successful! 🎉</p>
+      <p class="sub-msg" style="margin-bottom:6px;">We can't wait to see you on <strong>May 12, 2026</strong>!</p>
+      <p class="sub-msg" style="font-size:0.85em;color:#aaa;">Your team assignment will be announced at the event.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     BULK SUCCESS SCREEN
+═══════════════════════════════════════════ -->
+<div style="display:none;width:100%;max-width:580px;margin:0 auto;" id="bulkResultWrap">
+  <div class="caution-tape"><span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span></div>
+  <div class="container">
+    <div class="header-banner">
+      <h1>BATCH REGISTERED! 🎉</h1>
+      <p class="sub">Group Registration Complete</p>
+    </div>
+    <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
+    <div class="result-body">
+      <div style="font-size:3em;margin-bottom:12px;">⛪</div>
+      <p class="thank-you" id="bulkSuccessMsg">All participants registered!</p>
+      <p class="sub-msg" style="margin-bottom:18px;">Team assignments will be announced at the event.</p>
+      <button class="qr-btn" style="margin-top:12px;" onclick="resetToRegister()">⬅ Register More</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ADMIN LOGIN
+═══════════════════════════════════════════ -->
+<div style="display:none;width:100%;max-width:580px;margin:0 auto;" id="adminLoginWrap">
+  <div class="caution-tape"><span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span></div>
+  <div class="container">
+    <div class="header-banner">
+      <h1>ADMIN ACCESS</h1>
+      <p class="sub">🔐 Staff Only</p>
+    </div>
+    <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
+    <div class="admin-login-body">
+      <h2>Enter Password</h2>
+      <div class="form-group" style="margin-top:14px;">
+        <label for="adminPassword">Admin Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter admin password">
+      </div>
+      <button class="btn-primary" onclick="loginAdmin()">🔓 LOGIN</button>
+      <button class="btn-admin" style="margin-top:10px;" onclick="resetToRegister()">⬅ BACK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ADMIN PANEL
+═══════════════════════════════════════════ -->
+<div style="display:none;width:100%;max-width:640px;margin:0 auto;" id="adminPanelWrap">
+  <div class="caution-tape"><span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span></div>
+  <div class="container">
+    <div class="header-banner">
+      <h1>ADMIN PANEL</h1>
+      <p class="sub">Registered Participants</p>
+    </div>
+    <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
+    <div class="form-body">
+      <div class="admin-stats" id="adminStats">
+        <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total</div></div>
+        <div class="stat-card"><div class="stat-num" id="statPaid" style="color:#81c784">0</div><div class="stat-label">Paid</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT1">0</div><div class="stat-label">Team 1</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT2">0</div><div class="stat-label">Team 2</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT3">0</div><div class="stat-label">Team 3</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT4">0</div><div class="stat-label">Team 4</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT5">0</div><div class="stat-label">Team 5</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT6">0</div><div class="stat-label">Team 6</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT7">0</div><div class="stat-label">Team 7</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT8">0</div><div class="stat-label">Team 8</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT9">0</div><div class="stat-label">Team 9</div></div>
+        <div class="stat-card"><div class="stat-num" id="statT10">0</div><div class="stat-label">Team 10</div></div>
+      </div>
+      <div class="admin-controls">
+        <input type="text" id="searchInput" placeholder="Search by name or church…" oninput="renderAdmin()">
+        <select id="filterTeam" onchange="renderAdmin()">
+          <option value="">All Teams</option>
+          <option>Team 1</option>
+          <option>Team 2</option>
+          <option>Team 3</option>
+          <option>Team 4</option>
+          <option>Team 5</option>
+          <option>Team 6</option>
+          <option>Team 7</option>
+          <option>Team 8</option>
+          <option>Team 9</option>
+          <option>Team 10</option>
+        </select>
+        <select id="filterPaid" onchange="renderAdmin()">
+          <option value="">All</option>
+          <option value="paid">Paid</option>
+          <option value="unpaid">Unpaid</option>
+        </select>
+        <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Name</th><th>Age</th><th>Church</th><th>Contact</th><th>Team</th><th>Payment</th><th>Action</th></tr>
+          </thead>
+          <tbody id="adminTable"></tbody>
+        </table>
+      </div>
+      <div class="mobile-cards" id="mobileCards"></div>
+
+      <button class="logout" onclick="logoutAdmin()">LOGOUT</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF.js library for parsing PDF text -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, onValue, remove, update, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA_996opw31YVV82k9U7sW98L0LSrv_Asw",
+  authDomain: "ypgsevent.firebaseapp.com",
+  databaseURL: "https://ypgsevent-default-rtdb.firebaseio.com",
+  projectId: "ypgsevent",
+  storageBucket: "ypgsevent.firebasestorage.app",
+  messagingSenderId: "55497113348",
+  appId: "1:55497113348:web:a6113f3c00badd13191a51"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const participantsRef = ref(db, "participants");
+const ADMIN_PASSWORD = "youthadmin123";
+
+const teams = [
+  { name: "Team 1",  color: "#e3f2fd", text: "#0d47a1", border: "#90caf9" },
+  { name: "Team 2",  color: "#ffebee", text: "#b71c1c", border: "#ef9a9a" },
+  { name: "Team 3",  color: "#fffde7", text: "#f57f17", border: "#fff176" },
+  { name: "Team 4",  color: "#e8f5e9", text: "#1b5e20", border: "#a5d6a7" },
+  { name: "Team 5",  color: "#f3e5f5", text: "#4a148c", border: "#ce93d8" },
+  { name: "Team 6",  color: "#fce4ec", text: "#880e4f", border: "#f48fb1" },
+  { name: "Team 7",  color: "#e0f7fa", text: "#006064", border: "#80deea" },
+  { name: "Team 8",  color: "#fff8e1", text: "#e65100", border: "#ffcc80" },
+  { name: "Team 9",  color: "#efebe9", text: "#3e2723", border: "#bcaaa4" },
+  { name: "Team 10", color: "#e8eaf6", text: "#1a237e", border: "#9fa8da" }
+];
+
+let allParticipants = {};
+let parsedBulkData  = [];
+
+// ── Helpers ────────────────────────────────────────────────────
+function showToast(msg, duration = 3000) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), duration);
+}
+
+function setError(fieldId, errId, show) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errId);
+  if (show) { f.classList.add("error"); e.classList.add("show"); }
+  else       { f.classList.remove("error"); e.classList.remove("show"); }
+  return !show;
+}
+
+function hide(...ids) { ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = "none"; }); }
+function show(id, display="block") { const el = document.getElementById(id); if (el) el.style.display = display; }
+
+// ── Tab switch ─────────────────────────────────────────────────
+window.switchTab = function(tab) {
+  document.getElementById("panelSingle").style.display = tab === "single" ? "block" : "none";
+  document.getElementById("panelBulk").style.display   = tab === "bulk"   ? "block" : "none";
+  document.getElementById("tab-single").classList.toggle("active", tab === "single");
+  document.getElementById("tab-bulk").classList.toggle("active", tab === "bulk");
+};
+
+// ── Reset to register ──────────────────────────────────────────
+window.resetToRegister = function () {
+  hide("resultPageWrap", "bulkResultWrap", "adminLoginWrap", "adminPanelWrap");
+  show("registerPage");
+};
+
+// ── Team balancing ─────────────────────────────────────────────
+async function getBalancedTeam() {
+  const snapshot = await get(participantsRef);
+  const counts = {};
+  teams.forEach(t => { counts[t.name] = 0; });
+  snapshot.forEach(child => {
+    const t = child.val().team;
+    if (counts[t] !== undefined) counts[t]++;
+  });
+  const min = Math.min(...Object.values(counts));
+  const candidates = Object.keys(counts).filter(k => counts[k] === min);
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
+
+// ── Duplicate check ────────────────────────────────────────────
+async function isDuplicate(name, contact) {
+  const snapshot = await get(participantsRef);
+  let found = false;
+  snapshot.forEach(child => {
+    const p = child.val();
+    const sameName    = p.name.trim().toLowerCase() === name.trim().toLowerCase();
+    const sameContact = contact && p.contact && p.contact.replace(/\D/g,'') === contact.replace(/\D/g,'');
+    if (sameName || sameContact) found = true;
+  });
+  return found;
+}
+
+// ── Single register ────────────────────────────────────────────
+window.register = async function () {
+  const name    = document.getElementById("name").value.trim();
+  const age     = document.getElementById("age").value.trim();
+  const church  = document.getElementById("church").value.trim();
+  const contact = document.getElementById("contact").value.trim();
+
+  let valid = true;
+  valid = setError("name",    "err-name",    !name)              && valid;
+  valid = setError("age",     "err-age",     !age || age < 1 || age > 99) && valid;
+  valid = setError("church",  "err-church",  !church)            && valid;
+  valid = setError("contact", "err-contact", !/^[\d\s\+\-]{7,15}$/.test(contact)) && valid;
+  if (!valid) return;
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Checking…';
+
+  const dup = await isDuplicate(name, contact);
+  if (dup) {
+    btn.disabled = false;
+    btn.textContent = "🚧 SUBMIT REGISTRATION";
+    showToast("⚠️ You appear to already be registered!", 4000);
+    return;
+  }
+
+  btn.innerHTML = '<span class="spinner"></span> Registering…';
+  const teamName = await getBalancedTeam();
+
+  await push(participantsRef, { name, age: Number(age), church, contact, team: teamName, paid: false });
+
+  hide("registerPage");
+  show("resultPageWrap");
+  btn.disabled = false;
+  btn.textContent = "🚧 SUBMIT REGISTRATION";
+};
+
+
+// ── PDF parsing ────────────────────────────────────────────────
+window.handlePDFUpload = async function (input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  document.getElementById("fileName").textContent = "📄 " + file.name;
+  document.getElementById("fileName").style.display = "block";
+
+  // Read PDF text using PDF.js
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+  let fullText = "";
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const strings = content.items.map(item => item.str);
+    fullText += strings.join(" ") + "\n";
+  }
+
+  // Parse rows — try to find lines with name | age | church | contact patterns
+  parsedBulkData = parsePDFText(fullText);
+  renderPreview(parsedBulkData);
+};
+
+function parsePDFText(text) {
+  const results = [];
+  // Split into lines
+  const lines = text.split(/\n|;/).map(l => l.trim()).filter(l => l.length > 3);
+
+  for (const line of lines) {
+    // Try pipe-separated: Name | Age | Church | Contact
+    const pipeParts = line.split(/\|/).map(s => s.trim());
+    if (pipeParts.length >= 4) {
+      const [name, age, church, contact] = pipeParts;
+      if (isValidName(name) && isValidAge(age)) {
+        results.push({ name, age: parseInt(age), church: church || "—", contact: contact || "—", valid: true });
+        continue;
+      }
+    }
+
+    // Try comma-separated
+    const commaParts = line.split(/,/).map(s => s.trim());
+    if (commaParts.length >= 4) {
+      const [name, age, church, contact] = commaParts;
+      if (isValidName(name) && isValidAge(age)) {
+        results.push({ name, age: parseInt(age), church: church || "—", contact: contact || "—", valid: true });
+        continue;
+      }
+    }
+
+    // Try tab-separated
+    const tabParts = line.split(/\t/).map(s => s.trim());
+    if (tabParts.length >= 4) {
+      const [name, age, church, contact] = tabParts;
+      if (isValidName(name) && isValidAge(age)) {
+        results.push({ name, age: parseInt(age), church: church || "—", contact: contact || "—", valid: true });
+        continue;
+      }
+    }
+
+    // Try space-heuristic: if line has a number in it (potential age)
+    const spaceMatch = line.match(/^(.+?)\s+(\d{1,2})\s+(.+?)\s+([\d\+\-\s]{7,15})$/);
+    if (spaceMatch) {
+      const [, name, age, church, contact] = spaceMatch;
+      if (isValidName(name) && isValidAge(age)) {
+        results.push({ name: name.trim(), age: parseInt(age), church: church.trim(), contact: contact.trim(), valid: true });
+      }
+    }
+  }
+
+  return results;
+}
+
+function isValidName(s) {
+  return s && /^[A-Za-zÀ-ÖØ-öø-ÿ\s\.\-\']{2,60}$/.test(s) && isNaN(s);
+}
+function isValidAge(s) {
+  const n = parseInt(s);
+  return !isNaN(n) && n >= 1 && n <= 99;
+}
+
+function renderPreview(data) {
+  const wrap = document.getElementById("previewWrap");
+  const body = document.getElementById("previewBody");
+  const countEl = document.getElementById("previewCount");
+  const bulkBtn = document.getElementById("bulkSubmitBtn");
+
+  if (data.length === 0) {
+    showToast("⚠️ No valid participants found in PDF. Check the format.", 5000);
+    wrap.style.display = "none";
+    bulkBtn.style.display = "none";
+    return;
+  }
+
+  countEl.textContent = data.length;
+  body.innerHTML = "";
+  data.forEach((p, i) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td style="color:#888">${i+1}</td>
+      <td style="font-weight:700">${esc(p.name)}</td>
+      <td>${p.age}</td>
+      <td>${esc(p.church)}</td>
+      <td>${esc(p.contact)}</td>
+      <td><span class="preview-badge ${p.valid ? '' : 'err'}">${p.valid ? "✔ Ready" : "⚠ Check"}</span></td>`;
+    body.appendChild(row);
+  });
+
+  wrap.style.display = "block";
+  bulkBtn.style.display = "block";
+}
+
+// ── Bulk register ──────────────────────────────────────────────
+window.registerBulk = async function () {
+  if (!parsedBulkData.length) return;
+  const btn = document.getElementById("bulkSubmitBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Registering…';
+
+  let success = 0, skipped = 0;
+
+  for (const p of parsedBulkData) {
+    if (!p.valid) { skipped++; continue; }
+    const dup = await isDuplicate(p.name, p.contact !== "—" ? p.contact : null);
+    if (dup) { skipped++; continue; }
+    const teamName = await getBalancedTeam();
+    await push(participantsRef, {
+      name: p.name, age: p.age, church: p.church,
+      contact: p.contact !== "—" ? p.contact : "",
+      team: teamName, paid: false
+    });
+    success++;
+  }
+
+  btn.disabled = false;
+  btn.textContent = "🚧 REGISTER ALL PARTICIPANTS";
+
+  document.getElementById("bulkSuccessMsg").textContent =
+    `${success} participant${success !== 1 ? "s" : ""} registered! ${skipped ? `(${skipped} skipped as duplicates)` : ""}`;
+
+  hide("registerPage");
+  show("bulkResultWrap");
+  parsedBulkData = [];
+};
+
+// ── Download template ──────────────────────────────────────────
+window.downloadTemplate = function () {
+  const csv = `Full Name,Age,Church,Contact Number
+Juan dela Cruz,18,Bible Baptist Church Manila,09171234567
+Maria Santos,16,Grace Baptist Church,09281234567
+Pedro Reyes,20,Living Word Baptist,09391234567`;
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "UFBBC_Registration_Template.csv"; a.click();
+  URL.revokeObjectURL(url);
+  showToast("✅ Template downloaded!");
+};
+
+// ── Drag & drop visual ─────────────────────────────────────────
+const uploadZone = document.getElementById("uploadZone");
+uploadZone.addEventListener("dragover", e => { e.preventDefault(); uploadZone.classList.add("dragover"); });
+uploadZone.addEventListener("dragleave", () => uploadZone.classList.remove("dragover"));
+uploadZone.addEventListener("drop", e => {
+  e.preventDefault();
+  uploadZone.classList.remove("dragover");
+  const f = e.dataTransfer.files[0];
+  if (f && f.type === "application/pdf") {
+    const input = document.getElementById("pdfFile");
+    const dt = new DataTransfer();
+    dt.items.add(f);
+    input.files = dt.files;
+    window.handlePDFUpload(input);
+  } else {
+    showToast("⚠️ Please drop a PDF file.");
+  }
+});
+
+// ── Admin login/logout ─────────────────────────────────────────
+window.showAdminLogin = function () {
+  hide("registerPage");
+  show("adminLoginWrap");
+};
+
+window.loginAdmin = function () {
+  if (document.getElementById("adminPassword").value !== ADMIN_PASSWORD) {
+    showToast("❌ Wrong password.");
+    return;
+  }
+  hide("adminLoginWrap");
+  show("adminPanelWrap");
+  startListening();
+};
+
+window.logoutAdmin = function () {
+  hide("adminPanelWrap");
+  show("registerPage");
+};
+
+// ── Real-time listener ─────────────────────────────────────────
+function startListening() {
+  onValue(participantsRef, snapshot => {
+    allParticipants = {};
+    snapshot.forEach(child => { allParticipants[child.key] = child.val(); });
+    renderAdmin();
+  });
+}
+
+// ── Render admin ───────────────────────────────────────────────
+window.renderAdmin = function () {
+  const query      = document.getElementById("searchInput").value.toLowerCase();
+  const teamFilter = document.getElementById("filterTeam").value;
+  const paidFilter = document.getElementById("filterPaid").value;
+
+  const filtered = Object.entries(allParticipants).filter(([, p]) => {
+    const matchSearch = p.name.toLowerCase().includes(query) || (p.church||"").toLowerCase().includes(query);
+    const matchTeam   = !teamFilter || p.team === teamFilter;
+    const matchPaid   = !paidFilter || (paidFilter === "paid" ? p.paid : !p.paid);
+    return matchSearch && matchTeam && matchPaid;
+  });
+
+  const all = Object.values(allParticipants);
+  document.getElementById("statTotal").textContent = all.length;
+  document.getElementById("statPaid").textContent  = all.filter(p => p.paid).length;
+  for (let i = 1; i <= 10; i++) {
+    const el = document.getElementById("statT" + i);
+    if (el) el.textContent = all.filter(p => p.team === "Team " + i).length;
+  }
+
+  const tbody = document.getElementById("adminTable");
+  tbody.innerHTML = "";
+  filtered.forEach(([key, p], i) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td style="color:#888;font-size:0.8em">${i+1}</td>
+      <td style="font-weight:700">${esc(p.name)}</td>
+      <td>${p.age}</td>
+      <td>${esc(p.church)}</td>
+      <td>${esc(p.contact||"—")}</td>
+      <td style="font-size:0.8em">${esc(p.team)}</td>
+      <td>
+        <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}', ${p.paid})">
+          ${p.paid ? "✔ Paid" : "Unpaid"}
+        </button>
+      </td>
+      <td><button class="delete-btn" onclick="deleteParticipant('${key}')">Delete</button></td>`;
+    tbody.appendChild(row);
+  });
+
+  const cards = document.getElementById("mobileCards");
+  cards.innerHTML = "";
+  filtered.forEach(([key, p]) => {
+    const card = document.createElement("div");
+    card.className = "participant-card";
+    card.innerHTML = `
+      <div class="card-name">${esc(p.name)}</div>
+      <div class="card-row">Age: <span>${p.age}</span></div>
+      <div class="card-row">Church: <span>${esc(p.church)}</span></div>
+      <div class="card-row">Contact: <span>${esc(p.contact||"—")}</span></div>
+      <div class="card-row">Team: <span>${esc(p.team)}</span></div>
+      <div class="card-actions">
+        <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}', ${p.paid})">
+          ${p.paid ? "✔ Paid" : "Unpaid"}
+        </button>
+        <button class="delete-btn" onclick="deleteParticipant('${key}')">Delete</button>
+      </div>`;
+    cards.appendChild(card);
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='8' style='text-align:center;color:#999;padding:20px'>No participants found.</td></tr>";
+    cards.innerHTML = "<p style='text-align:center;color:#999;padding:20px'>No participants found.</p>";
+  }
+};
+
+window.togglePaid = (key, cur) => update(ref(db, "participants/" + key), { paid: !cur });
+
+window.deleteParticipant = function (key) {
+  if (!confirm("Delete this participant?")) return;
+  remove(ref(db, "participants/" + key));
+};
+
+
+window.exportCSV = function () {
+  const rows = [["Name","Age","Church","Contact","Team","Paid"]];
+  Object.values(allParticipants).forEach(p => {
+    rows.push([p.name, p.age, p.church, p.contact||"", p.team, p.paid ? "Yes" : "No"]);
+  });
+  const csv  = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href = url; a.download = "participants.csv"; a.click();
+  URL.revokeObjectURL(url);
+  showToast("✅ CSV downloaded!");
+};
+
+function esc(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+
+
+</script>
+</body>
+</html>
