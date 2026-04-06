@@ -547,6 +547,16 @@ tr:hover td { background: #fff8f0; }
         <div class="error-msg" id="err-contact">Please enter a valid contact number.</div>
       </div>
 
+      <div class="form-group">
+        <label for="gender">Gender <span style="color:var(--red)">*</span></label>
+        <select id="gender">
+          <option value="">— Select —</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <div class="error-msg" id="err-gender">Please select your gender.</div>
+      </div>
+
       <button class="btn-primary" id="submitBtn" onclick="register()">🚧 SUBMIT REGISTRATION</button>
       <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
     </div>
@@ -696,7 +706,7 @@ tr:hover td { background: #fff8f0; }
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>#</th><th>Name</th><th>Age</th><th>Church</th><th>Contact</th><th>Team</th><th>Payment</th><th>Action</th></tr>
+            <tr><th>#</th><th>Name</th><th>Age</th><th>Gender</th><th>Church</th><th>Contact</th><th>Team</th><th>Payment</th><th>Action</th></tr>
           </thead>
           <tbody id="adminTable"></tbody>
         </table>
@@ -813,12 +823,14 @@ window.register = async function () {
   const age     = document.getElementById("age").value.trim();
   const church  = document.getElementById("church").value.trim();
   const contact = document.getElementById("contact").value.trim();
+  const gender  = document.getElementById("gender").value;
 
   let valid = true;
   valid = setError("name",    "err-name",    !name)              && valid;
   valid = setError("age",     "err-age",     !age || age < 1 || age > 99) && valid;
   valid = setError("church",  "err-church",  !church)            && valid;
   valid = setError("contact", "err-contact", !/^[\d\s\+\-]{7,15}$/.test(contact)) && valid;
+  valid = setError("gender",  "err-gender",  !gender)            && valid;
   if (!valid) return;
 
   const btn = document.getElementById("submitBtn");
@@ -836,7 +848,7 @@ window.register = async function () {
   btn.innerHTML = '<span class="spinner"></span> Registering…';
   const teamName = await getBalancedTeam();
 
-  await push(participantsRef, { name, age: Number(age), church, contact, team: teamName, paid: false });
+  await push(participantsRef, { name, age: Number(age), church, contact, gender, team: teamName, paid: false });
 
   hide("registerPage");
   show("resultPageWrap");
@@ -887,6 +899,14 @@ function addGroupRow() {
         <input id="g-contact-${id}" type="tel" placeholder="09xxxxxxxxx" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;">
       </div>
     </div>
+    <div style="margin-top:8px;">
+      <label style="font-size:0.78em;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--black);display:block;margin-bottom:3px;">Gender *</label>
+      <select id="g-gender-${id}" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;background:#fff;">
+        <option value="">— Select —</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </div>
     <div id="g-err-${id}" style="color:var(--red);font-size:0.78em;font-weight:700;margin-top:6px;display:none;"></div>
   `;
   container.appendChild(row);
@@ -924,6 +944,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
     const age     = document.getElementById("g-age-"     + rowId)?.value.trim();
     const church  = document.getElementById("g-church-"  + rowId)?.value.trim();
     const contact = document.getElementById("g-contact-" + rowId)?.value.trim();
+    const gender  = document.getElementById("g-gender-"  + rowId)?.value;
     const errEl   = document.getElementById("g-err-"     + rowId);
 
     const errs = [];
@@ -931,12 +952,15 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
     if (!age || age < 1 || age > 99) errs.push("age");
     if (!church)  errs.push("church");
     if (!/^[\d\s\+\-]{7,15}$/.test(contact)) errs.push("contact");
+    if (!gender)  errs.push("sex");
 
     // Highlight invalid fields
     ["name","age","church","contact"].forEach(f => {
       const el = document.getElementById(`g-${f}-${rowId}`);
       if (el) el.style.borderColor = errs.includes(f) ? "var(--red)" : "#ddd";
     });
+    const genderEl = document.getElementById(`g-gender-${rowId}`);
+    if (genderEl) genderEl.style.borderColor = errs.includes("sex") ? "var(--red)" : "#ddd";
 
     if (errs.length > 0) {
       errEl.textContent = "⚠ Please fill in: " + errs.join(", ");
@@ -944,7 +968,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
       hasError = true;
     } else {
       errEl.style.display = "none";
-      people.push({ name, age: Number(age), church, contact });
+      people.push({ name, age: Number(age), church, contact, gender });
     }
   }
 
@@ -1038,6 +1062,7 @@ window.renderAdmin = function () {
       <td style="color:#888;font-size:0.8em">${i+1}</td>
       <td style="font-weight:700">${esc(p.name)}</td>
       <td>${p.age}</td>
+      <td>${p.gender || "—"}</td>
       <td>${esc(p.church)}</td>
       <td>${esc(p.contact||"—")}</td>
       <td style="font-size:0.8em">${esc(p.team)}</td>
@@ -1058,6 +1083,7 @@ window.renderAdmin = function () {
     card.innerHTML = `
       <div class="card-name">${esc(p.name)}</div>
       <div class="card-row">Age: <span>${p.age}</span></div>
+      <div class="card-row">Gender: <span>${p.gender || "—"}</span></div>
       <div class="card-row">Church: <span>${esc(p.church)}</span></div>
       <div class="card-row">Contact: <span>${esc(p.contact||"—")}</span></div>
       <div class="card-row">Team: <span>${esc(p.team)}</span></div>
@@ -1071,7 +1097,7 @@ window.renderAdmin = function () {
   });
 
   if (filtered.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='8' style='text-align:center;color:#999;padding:20px'>No participants found.</td></tr>";
+    tbody.innerHTML = "<tr><td colspan='9' style='text-align:center;color:#999;padding:20px'>No participants found.</td></tr>";
     cards.innerHTML = "<p style='text-align:center;color:#999;padding:20px'>No participants found.</p>";
   }
 };
@@ -1085,9 +1111,9 @@ window.deleteParticipant = function (key) {
 
 
 window.exportCSV = function () {
-  const rows = [["Name","Age","Church","Contact","Team","Paid"]];
+  const rows = [["Name","Age","Gender","Church","Contact","Team","Paid"]];
   Object.values(allParticipants).forEach(p => {
-    rows.push([p.name, p.age, p.church, p.contact||"", p.team, p.paid ? "Yes" : "No"]);
+    rows.push([p.name, p.age, p.gender||"", p.church, p.contact||"", p.team, p.paid ? "Yes" : "No"]);
   });
   const csv  = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
   const blob = new Blob([csv], { type: "text/csv" });
