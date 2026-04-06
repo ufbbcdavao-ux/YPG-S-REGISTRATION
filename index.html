@@ -952,7 +952,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
     if (!age || age < 1 || age > 99) errs.push("age");
     if (!church)  errs.push("church");
     if (!/^[\d\s\+\-]{7,15}$/.test(contact)) errs.push("contact");
-    if (!gender)  errs.push("sex");
+    if (!gender)  errs.push("gender");
 
     // Highlight invalid fields
     ["name","age","church","contact"].forEach(f => {
@@ -960,7 +960,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
       if (el) el.style.borderColor = errs.includes(f) ? "var(--red)" : "#ddd";
     });
     const genderEl = document.getElementById(`g-gender-${rowId}`);
-    if (genderEl) genderEl.style.borderColor = errs.includes("sex") ? "var(--red)" : "#ddd";
+    if (genderEl) genderEl.style.borderColor = errs.includes("gender") ? "var(--red)" : "#ddd";
 
     if (errs.length > 0) {
       errEl.textContent = "⚠ Please fill in: " + errs.join(", ");
