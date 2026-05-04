@@ -541,10 +541,12 @@ tr:hover td { background: #fff8f0; }
         <input id="church" type="text" placeholder="Enter your church">
         <div class="error-msg" id="err-church">Please enter your church.</div>
       </div>
+
+      <!-- Contact Number — OPTIONAL -->
       <div class="form-group">
-        <label for="contact">Contact Number <span style="color:var(--red)">*</span></label>
-        <input id="contact" type="tel" placeholder="e.g. 09xxxxxxxxx" autocomplete="tel">
-        <div class="error-msg" id="err-contact">Please enter a valid contact number.</div>
+        <label for="contact">Contact Number <span style="color:#aaa;font-size:0.85em;font-weight:600;text-transform:none;letter-spacing:0;">(optional)</span></label>
+        <input id="contact" type="tel" placeholder="e.g. 09xxxxxxxxx (optional)" autocomplete="tel">
+        <div class="error-msg" id="err-contact">Please enter a valid contact number (7–15 digits).</div>
       </div>
 
       <div class="form-group">
@@ -773,6 +775,12 @@ function setError(fieldId, errId, show) {
 function hide(...ids) { ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = "none"; }); }
 function show(id, display="block") { const el = document.getElementById(id); if (el) el.style.display = display; }
 
+// ── Contact validation helper (allows empty) ──────────────────
+function isValidContact(contact) {
+  if (!contact) return true; // optional — empty is fine
+  return /^[\d\s\+\-]{7,15}$/.test(contact);
+}
+
 // ── Tab switch ─────────────────────────────────────────────────
 window.switchTab = function(tab) {
   document.getElementById("panelSingle").style.display = tab === "single" ? "block" : "none";
@@ -811,6 +819,7 @@ async function isDuplicate(name, contact) {
   snapshot.forEach(child => {
     const p = child.val();
     const sameName    = p.name.trim().toLowerCase() === name.trim().toLowerCase();
+    // Only check contact match if both values are non-empty
     const sameContact = contact && p.contact && p.contact.replace(/\D/g,'') === contact.replace(/\D/g,'');
     if (sameName || sameContact) found = true;
   });
@@ -826,11 +835,11 @@ window.register = async function () {
   const gender  = document.getElementById("gender").value;
 
   let valid = true;
-  valid = setError("name",    "err-name",    !name)              && valid;
-  valid = setError("age",     "err-age",     !age || age < 1 || age > 99) && valid;
-  valid = setError("church",  "err-church",  !church)            && valid;
-  valid = setError("contact", "err-contact", !/^[\d\s\+\-]{7,15}$/.test(contact)) && valid;
-  valid = setError("gender",  "err-gender",  !gender)            && valid;
+  valid = setError("name",    "err-name",    !name)                        && valid;
+  valid = setError("age",     "err-age",     !age || age < 1 || age > 99)  && valid;
+  valid = setError("church",  "err-church",  !church)                      && valid;
+  valid = setError("contact", "err-contact", !isValidContact(contact))     && valid; // optional
+  valid = setError("gender",  "err-gender",  !gender)                      && valid;
   if (!valid) return;
 
   const btn = document.getElementById("submitBtn");
@@ -848,7 +857,7 @@ window.register = async function () {
   btn.innerHTML = '<span class="spinner"></span> Registering…';
   const teamName = await getBalancedTeam();
 
-  await push(participantsRef, { name, age: Number(age), church, contact, gender, team: teamName, paid: false });
+  await push(participantsRef, { name, age: Number(age), church, contact: contact || "—", gender, team: teamName, paid: false });
 
   hide("registerPage");
   show("resultPageWrap");
@@ -895,7 +904,7 @@ function addGroupRow() {
         <input id="g-church-${id}" type="text" placeholder="Church" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;">
       </div>
       <div>
-        <label style="font-size:0.78em;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--black);display:block;margin-bottom:3px;">Contact *</label>
+        <label style="font-size:0.78em;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--black);display:block;margin-bottom:3px;">Contact <span style="font-size:0.85em;font-weight:600;text-transform:none;letter-spacing:0;color:#aaa;">(optional)</span></label>
         <input id="g-contact-${id}" type="tel" placeholder="09xxxxxxxxx" style="width:100%;padding:10px 12px;border-radius:8px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:0.92em;font-weight:600;">
       </div>
     </div>
@@ -951,14 +960,18 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
     if (!name)    errs.push("name");
     if (!age || age < 1 || age > 99) errs.push("age");
     if (!church)  errs.push("church");
-    if (!/^[\d\s\+\-]{7,15}$/.test(contact)) errs.push("contact");
+    // Contact is optional — only flag if filled in but invalid
+    if (contact && !/^[\d\s\+\-]{7,15}$/.test(contact)) errs.push("contact (invalid format)");
     if (!gender)  errs.push("gender");
 
     // Highlight invalid fields
-    ["name","age","church","contact"].forEach(f => {
+    ["name","age","church"].forEach(f => {
       const el = document.getElementById(`g-${f}-${rowId}`);
-      if (el) el.style.borderColor = errs.includes(f) ? "var(--red)" : "#ddd";
+      if (el) el.style.borderColor = errs.some(e => e.startsWith(f)) ? "var(--red)" : "#ddd";
     });
+    // Contact: only highlight red if it has content and is invalid
+    const contactEl = document.getElementById(`g-contact-${rowId}`);
+    if (contactEl) contactEl.style.borderColor = errs.some(e => e.startsWith("contact")) ? "var(--red)" : "#ddd";
     const genderEl = document.getElementById(`g-gender-${rowId}`);
     if (genderEl) genderEl.style.borderColor = errs.includes("gender") ? "var(--red)" : "#ddd";
 
@@ -968,7 +981,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
       hasError = true;
     } else {
       errEl.style.display = "none";
-      people.push({ name, age: Number(age), church, contact, gender });
+      people.push({ name, age: Number(age), church, contact: contact || "—", gender });
     }
   }
 
@@ -982,7 +995,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
 
   let success = 0, skipped = 0;
   for (const p of people) {
-    const dup = await isDuplicate(p.name, p.contact);
+    const dup = await isDuplicate(p.name, p.contact !== "—" ? p.contact : "");
     if (dup) { skipped++; continue; }
     const teamName = await getBalancedTeam();
     await push(participantsRef, { ...p, team: teamName, paid: false });
@@ -1113,7 +1126,7 @@ window.deleteParticipant = function (key) {
 window.exportCSV = function () {
   const rows = [["Name","Age","Gender","Church","Contact","Team","Paid"]];
   Object.values(allParticipants).forEach(p => {
-    rows.push([p.name, p.age, p.gender||"", p.church, p.contact||"", p.team, p.paid ? "Yes" : "No"]);
+    rows.push([p.name, p.age, p.gender||"", p.church, p.contact||"—", p.team, p.paid ? "Yes" : "No"]);
   });
   const csv  = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
   const blob = new Blob([csv], { type: "text/csv" });
@@ -1127,8 +1140,6 @@ window.exportCSV = function () {
 function esc(str) {
   return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
-
-
 
 </script>
 </body>
