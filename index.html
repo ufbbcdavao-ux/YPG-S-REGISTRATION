@@ -36,7 +36,6 @@ body {
   padding: 24px 12px 40px;
 }
 
-/* ── Caution tape stripe ── */
 .caution-tape {
   background: var(--caution);
   color: var(--black);
@@ -73,17 +72,11 @@ body {
   margin: 0 auto;
 }
 
-/* ── Header banner ── */
 .header-banner {
   background: var(--black);
   padding: 22px 28px 18px;
   text-align: center;
   position: relative;
-}
-.header-banner img.logo {
-  height: 54px;
-  filter: brightness(0) invert(1);
-  margin-bottom: 8px;
 }
 .header-banner h1 {
   font-family: 'Black Han Sans', sans-serif;
@@ -102,7 +95,6 @@ body {
   text-transform: uppercase;
 }
 
-/* ── Tab switcher ── */
 .tab-bar {
   display: flex;
   border-bottom: 3px solid var(--black);
@@ -121,13 +113,9 @@ body {
   border-right: 2px solid var(--black);
 }
 .tab-btn:last-child { border-right: none; }
-.tab-btn.active {
-  background: var(--orange);
-  color: var(--black);
-}
+.tab-btn.active { background: var(--orange); color: var(--black); }
 .tab-btn:hover:not(.active) { background: #e0dbd0; }
 
-/* ── Form body ── */
 .form-body { padding: 26px 28px 28px; }
 
 h2 {
@@ -137,12 +125,7 @@ h2 {
   margin-bottom: 4px;
   letter-spacing: 0.5px;
 }
-.section-hint {
-  font-size: 0.82em;
-  color: #888;
-  margin-bottom: 18px;
-}
-
+.section-hint { font-size: 0.82em; color: #888; margin-bottom: 18px; }
 .form-group { margin-top: 14px; }
 
 label {
@@ -176,102 +159,6 @@ input.error, select.error { border-color: var(--red); }
 .error-msg { color: var(--red); font-size: 0.8em; margin-top: 4px; display: none; font-weight: 600; }
 .error-msg.show { display: block; }
 
-/* ── PDF Upload Zone ── */
-.upload-zone {
-  border: 3px dashed var(--orange);
-  border-radius: 14px;
-  padding: 28px 18px;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
-  background: #fff8f0;
-  margin-top: 14px;
-  position: relative;
-}
-.upload-zone:hover, .upload-zone.dragover {
-  background: #ffecd6;
-  border-color: var(--orange-dk);
-}
-.upload-zone input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 0;
-}
-.upload-icon { font-size: 2.4em; display: block; margin-bottom: 8px; }
-.upload-zone p { font-size: 0.9em; color: #666; font-weight: 600; }
-.upload-zone p strong { color: var(--orange-dk); }
-.upload-zone .file-name {
-  margin-top: 10px;
-  font-size: 0.85em;
-  color: var(--orange-dk);
-  font-weight: 700;
-  display: none;
-}
-
-/* PDF template note */
-.template-note {
-  background: #fff8e1;
-  border: 1.5px solid var(--caution);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-top: 14px;
-  font-size: 0.83em;
-  color: #5a4000;
-  line-height: 1.5;
-}
-.template-note strong { color: #3a2800; }
-.template-note a { color: var(--orange-dk); font-weight: 700; }
-
-/* Preview table */
-.preview-wrap {
-  margin-top: 16px;
-  display: none;
-}
-.preview-wrap h3 {
-  font-family: 'Black Han Sans', sans-serif;
-  font-size: 0.95em;
-  color: var(--black);
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
-}
-.preview-table-wrap { overflow-x: auto; }
-.preview-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.82em;
-  min-width: 360px;
-}
-.preview-table th {
-  background: var(--orange);
-  color: var(--black);
-  padding: 8px 10px;
-  text-align: left;
-  font-weight: 800;
-}
-.preview-table td {
-  padding: 7px 10px;
-  border-bottom: 1px solid #f0ece4;
-  color: #333;
-}
-.preview-table tr:last-child td { border-bottom: none; }
-.preview-table tr:hover td { background: #fff5e8; }
-.preview-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-size: 0.78em;
-  font-weight: 700;
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-.preview-badge.err { background: #ffebee; color: var(--red); }
-
-/* ── Buttons ── */
 button.btn-primary {
   width: 100%;
   margin-top: 22px;
@@ -326,22 +213,10 @@ button.logout {
   text-transform: uppercase;
 }
 
-/* ── Result page ── */
 .result-body { padding: 28px; text-align: center; }
-.result-body img { max-width: 86%; border-radius: 14px; margin-bottom: 16px; border: 3px solid var(--black); }
 .result-body .thank-you { font-family: 'Black Han Sans', sans-serif; font-size: 1.3em; color: var(--black); margin-bottom: 6px; }
 .result-body .sub-msg { font-size: 0.9em; color: #666; margin-bottom: 14px; }
-.team-badge {
-  display: inline-block;
-  margin: 6px auto 18px;
-  padding: 10px 26px;
-  border-radius: 30px;
-  font-family: 'Black Han Sans', sans-serif;
-  font-size: 1.1em;
-  letter-spacing: 0.5px;
-  border: 2.5px solid;
-}
-.qr-btn, .inquiry-link {
+.qr-btn {
   display: block;
   width: fit-content;
   margin: 10px auto;
@@ -358,8 +233,7 @@ button.logout {
   box-shadow: 3px 3px 0 var(--black);
   transition: transform 0.12s, box-shadow 0.12s;
 }
-.qr-btn:hover, .inquiry-link:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--black); }
-#qrcodeSection { display: none; margin-top: 10px; }
+.qr-btn:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--black); }
 
 /* ── Admin panel ── */
 .admin-stats {
@@ -406,10 +280,16 @@ tr:hover td { background: #fff8f0; }
 .paid-badge.paid   { background: #e8f5e9; color: #2e7d32; }
 .paid-badge.unpaid { background: #fff3e0; color: #e65100; }
 
-.delete-btn {
-  background: #e0e0e0; color: #333; padding: 6px 10px;
-  font-size: 0.8em; border-radius: 6px; border: none; cursor: pointer; font-family: 'Nunito', sans-serif;
+.action-btn {
+  padding: 5px 9px;
+  font-size: 0.78em; border-radius: 6px; border: none; cursor: pointer;
+  font-family: 'Nunito', sans-serif; font-weight: 700;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
 }
+.edit-btn   { background: #e3f2fd; color: #1565c0; }
+.edit-btn:hover { background: #1565c0; color: #fff; }
+.delete-btn { background: #e0e0e0; color: #333; }
 .delete-btn:hover { background: #c62828; color: #fff; }
 
 .mobile-cards { display: none; }
@@ -422,14 +302,9 @@ tr:hover td { background: #fff8f0; }
 .participant-card .card-row span { font-weight: 700; color: #222; }
 .card-actions { display: flex; gap: 8px; margin-top: 10px; align-items: center; flex-wrap: wrap; }
 
-/* ── Admin login ── */
 .admin-login-body { padding: 28px; }
-.admin-login-body h2 {
-  font-family: 'Black Han Sans', sans-serif;
-  font-size: 1.3em; color: var(--black); margin-bottom: 4px;
-}
+.admin-login-body h2 { font-family: 'Black Han Sans', sans-serif; font-size: 1.3em; color: var(--black); margin-bottom: 4px; }
 
-/* Spinner */
 .spinner {
   display: inline-block; width: 17px; height: 17px;
   border: 3px solid rgba(0,0,0,0.2); border-top-color: var(--black);
@@ -437,9 +312,8 @@ tr:hover td { background: #fff8f0; }
   vertical-align: middle; margin-right: 6px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-@keyframes fadeIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
 
-/* Toast */
 #toast {
   position: fixed; bottom: 24px; left: 50%;
   transform: translateX(-50%) translateY(80px);
@@ -452,20 +326,121 @@ tr:hover td { background: #fff8f0; }
 }
 #toast.show { transform: translateX(-50%) translateY(0); }
 
-/* Upload result summary */
-.upload-summary {
-  background: #f0fff4;
-  border: 2px solid #81c784;
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-top: 14px;
-  font-size: 0.85em;
-  color: #2e7d32;
-  font-weight: 700;
+/* ══════════════════════════════
+   EDIT MODAL
+══════════════════════════════ */
+#editModal {
   display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+#editModal.open { display: flex; }
+
+.modal-box {
+  background: var(--white);
+  border-radius: 20px;
+  border: 3px solid var(--black);
+  box-shadow: 8px 8px 0 var(--black);
+  width: 100%;
+  max-width: 440px;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
 }
 
-/* ── Responsive ── */
+.modal-header {
+  background: var(--black);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--caution);
+}
+.modal-header h3 {
+  font-family: 'Black Han Sans', sans-serif;
+  color: var(--caution);
+  font-size: 1.05em;
+  letter-spacing: 1px;
+}
+.modal-close-btn {
+  background: none; border: none; cursor: pointer;
+  color: #888; font-size: 1.4em; line-height: 1;
+  padding: 0 4px;
+  transition: color 0.15s;
+}
+.modal-close-btn:hover { color: var(--caution); }
+
+.modal-body { padding: 20px 22px 8px; }
+
+.modal-field { margin-bottom: 14px; }
+.modal-field label {
+  font-size: 0.8em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--black);
+  display: block;
+  margin-bottom: 4px;
+}
+.modal-field input,
+.modal-field select {
+  width: 100%;
+  padding: 10px 13px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  background: #fff;
+  color: var(--black);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.modal-field input:focus,
+.modal-field select:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232,130,12,0.18);
+}
+.modal-field input.modal-err,
+.modal-field select.modal-err {
+  border-color: var(--red);
+}
+
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 16px 22px 22px;
+}
+.modal-footer button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 2.5px solid var(--black);
+  text-transform: uppercase;
+  transition: transform 0.1s, box-shadow 0.1s, opacity 0.1s;
+}
+.modal-save {
+  background: var(--orange);
+  color: var(--black);
+  box-shadow: 3px 3px 0 var(--black);
+}
+.modal-save:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--black); }
+.modal-save:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.modal-cancel {
+  background: var(--black);
+  color: var(--caution);
+  box-shadow: 3px 3px 0 var(--orange-dk);
+}
+.modal-cancel:hover { opacity: 0.82; }
+
 @media (max-width: 540px) {
   .form-body, .result-body, .admin-login-body { padding: 20px 16px; }
   .header-banner { padding: 18px 18px 14px; }
@@ -475,10 +450,12 @@ tr:hover td { background: #fff8f0; }
   .admin-stats { gap: 5px; }
   .stat-card { padding: 10px 5px; min-width: 75px; }
   .admin-controls { flex-direction: column; }
-  .admin-controls input[type="text"],
-  .admin-controls select { width: 100%; min-width: unset; }
+  .admin-controls input[type="text"], .admin-controls select { width: 100%; min-width: unset; }
   .btn-export { width: 100%; }
   .tab-btn { font-size: 0.8em; padding: 11px 4px; }
+  .modal-box { border-radius: 16px; }
+  .modal-body { padding: 16px 16px 4px; }
+  .modal-footer { padding: 12px 16px 18px; }
 }
 </style>
 </head>
@@ -486,18 +463,83 @@ tr:hover td { background: #fff8f0; }
 
 <div id="toast"></div>
 
+<!-- ════════════════════════════════
+     EDIT DELEGATE MODAL
+════════════════════════════════ -->
+<div id="editModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalTitle">✏️ EDIT DELEGATE</h3>
+      <button class="modal-close-btn" onclick="closeEditModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editKey">
+
+      <div class="modal-field">
+        <label for="editName">Full Name <span style="color:var(--red)">*</span></label>
+        <input id="editName" type="text" placeholder="Full name" autocomplete="off">
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="modal-field">
+          <label for="editAge">Age <span style="color:var(--red)">*</span></label>
+          <input id="editAge" type="number" min="1" max="99" placeholder="Age">
+        </div>
+        <div class="modal-field">
+          <label for="editGender">Gender <span style="color:var(--red)">*</span></label>
+          <select id="editGender">
+            <option value="">— Select —</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label for="editChurch">Church <span style="color:var(--red)">*</span></label>
+        <input id="editChurch" type="text" placeholder="Church name" autocomplete="off">
+      </div>
+
+      <div class="modal-field">
+        <label for="editContact">Contact Number
+          <span style="color:#aaa;font-size:0.85em;font-weight:600;text-transform:none;letter-spacing:0;">(optional)</span>
+        </label>
+        <input id="editContact" type="tel" placeholder="09xxxxxxxxx">
+      </div>
+
+      <div class="modal-field">
+        <label for="editTeam">Team</label>
+        <select id="editTeam">
+          <option value="Team 1">Team 1</option>
+          <option value="Team 2">Team 2</option>
+          <option value="Team 3">Team 3</option>
+          <option value="Team 4">Team 4</option>
+          <option value="Team 5">Team 5</option>
+          <option value="Team 6">Team 6</option>
+          <option value="Team 7">Team 7</option>
+          <option value="Team 8">Team 8</option>
+          <option value="Team 9">Team 9</option>
+          <option value="Team 10">Team 10</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="modal-save" id="modalSaveBtn" onclick="saveEdit()">💾 SAVE CHANGES</button>
+      <button class="modal-cancel" onclick="closeEditModal()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+
 <!-- ═══════════════════════════════════════════
      REGISTRATION PAGE
 ═══════════════════════════════════════════ -->
 <div id="registerPage" style="width:100%;max-width:580px;margin:0 auto;">
-
-  <!-- Caution Tape Top -->
   <div class="caution-tape">
     <span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span>
   </div>
-
   <div class="container">
-    <!-- Header -->
     <div class="header-banner">
       <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:10px;">
         <div style="width:42px;height:42px;background:var(--caution);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--orange-lt);">
@@ -511,11 +553,8 @@ tr:hover td { background: #fff8f0; }
       <h1>UFBBC 1-Day Youth Camp</h1>
       <p class="sub">🏗 Under Construction &nbsp;·&nbsp; 1 Cor 3:9 &nbsp;·&nbsp; May 12, 2026</p>
     </div>
-
-    <!-- Caution tape divider -->
     <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
 
-    <!-- Tab bar -->
     <div class="tab-bar">
       <button class="tab-btn active" id="tab-single" onclick="switchTab('single')">👤 Single</button>
       <button class="tab-btn" id="tab-group" onclick="switchTab('group')">👥 Group Register</button>
@@ -525,7 +564,6 @@ tr:hover td { background: #fff8f0; }
     <div class="form-body" id="panelSingle">
       <h2>Register Here</h2>
       <p class="section-hint">Fill in your details below to secure your spot!</p>
-
       <div class="form-group">
         <label for="name">Full Name <span style="color:var(--red)">*</span></label>
         <input id="name" type="text" placeholder="Enter your full name" autocomplete="name">
@@ -541,14 +579,11 @@ tr:hover td { background: #fff8f0; }
         <input id="church" type="text" placeholder="Enter your church">
         <div class="error-msg" id="err-church">Please enter your church.</div>
       </div>
-
-      <!-- Contact Number — OPTIONAL -->
       <div class="form-group">
         <label for="contact">Contact Number <span style="color:#aaa;font-size:0.85em;font-weight:600;text-transform:none;letter-spacing:0;">(optional)</span></label>
         <input id="contact" type="tel" placeholder="e.g. 09xxxxxxxxx (optional)" autocomplete="tel">
         <div class="error-msg" id="err-contact">Please enter a valid contact number (7–15 digits).</div>
       </div>
-
       <div class="form-group">
         <label for="gender">Gender <span style="color:var(--red)">*</span></label>
         <select id="gender">
@@ -558,7 +593,6 @@ tr:hover td { background: #fff8f0; }
         </select>
         <div class="error-msg" id="err-gender">Please select your gender.</div>
       </div>
-
       <button class="btn-primary" id="submitBtn" onclick="register()">🚧 SUBMIT REGISTRATION</button>
       <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
     </div>
@@ -567,28 +601,13 @@ tr:hover td { background: #fff8f0; }
     <div class="form-body" id="panelGroup" style="display:none;">
       <h2>Group Registration</h2>
       <p class="section-hint">Add participants one by one, then submit all at once.</p>
-
-      <!-- Participant rows container -->
       <div id="groupRows"></div>
-
-      <!-- Add another button -->
-      <button id="addRowBtn" type="button" style="
-        width:100%; margin-top:14px; padding:11px;
-        border: 2px dashed var(--orange); border-radius:10px;
-        background:#fff8f0; color:var(--orange-dk);
-        font-family:'Black Han Sans',sans-serif; font-size:0.9em;
-        letter-spacing:1px; cursor:pointer; transition:background 0.2s;
-      ">➕ ADD ANOTHER PERSON</button>
-
-      <!-- Summary count -->
+      <button id="addRowBtn" type="button" style="width:100%;margin-top:14px;padding:11px;border:2px dashed var(--orange);border-radius:10px;background:#fff8f0;color:var(--orange-dk);font-family:'Black Han Sans',sans-serif;font-size:0.9em;letter-spacing:1px;cursor:pointer;transition:background 0.2s;">➕ ADD ANOTHER PERSON</button>
       <div id="groupCount" style="text-align:center;margin-top:10px;font-size:0.82em;color:#888;font-weight:700;"></div>
-
       <button class="btn-primary" id="groupSubmitBtn">🚧 REGISTER ALL</button>
       <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
     </div>
   </div>
-
-  <!-- Caution tape bottom -->
   <div class="caution-tape" style="border-radius:0 0 8px 8px;">
     <span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span>
   </div>
@@ -605,7 +624,7 @@ tr:hover td { background: #fff8f0; }
       <p class="sub">Registration Confirmed</p>
     </div>
     <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
-    <div class="result-body" id="resultPage">
+    <div class="result-body">
       <img src="https://raw.githubusercontent.com/leahjasolis-source/YPG-S-REGISTRATION/main/UFBBC.jpg" alt="UFBBC Youth Camp Poster" style="max-width:92%;border-radius:14px;margin-bottom:18px;border:3px solid var(--black);" onerror="this.src='https://raw.githubusercontent.com/leahjasolis-source/YPG-S-REGISTRATION/4191949a2e1600705c1b22ba44ec8d493b0b6499/ypg.jpg'">
       <p class="thank-you">Registration Successful! 🎉</p>
       <p class="sub-msg" style="margin-bottom:6px;">We can't wait to see you on <strong>May 12, 2026</strong>!</p>
@@ -660,16 +679,16 @@ tr:hover td { background: #fff8f0; }
 <!-- ═══════════════════════════════════════════
      ADMIN PANEL
 ═══════════════════════════════════════════ -->
-<div style="display:none;width:100%;max-width:640px;margin:0 auto;" id="adminPanelWrap">
+<div style="display:none;width:100%;max-width:700px;margin:0 auto;" id="adminPanelWrap">
   <div class="caution-tape"><span>⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp; ⚠ CAUTION: GOD'S WORK IN PROGRESS &nbsp;&nbsp;&nbsp;</span></div>
-  <div class="container">
+  <div class="container" style="max-width:700px;">
     <div class="header-banner">
       <h1>ADMIN PANEL</h1>
       <p class="sub">Registered Participants</p>
     </div>
     <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
     <div class="form-body">
-      <div class="admin-stats" id="adminStats">
+      <div class="admin-stats">
         <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total</div></div>
         <div class="stat-card"><div class="stat-num" id="statPaid" style="color:#81c784">0</div><div class="stat-label">Paid</div></div>
         <div class="stat-card"><div class="stat-num" id="statT1">0</div><div class="stat-label">Team 1</div></div>
@@ -683,19 +702,14 @@ tr:hover td { background: #fff8f0; }
         <div class="stat-card"><div class="stat-num" id="statT9">0</div><div class="stat-label">Team 9</div></div>
         <div class="stat-card"><div class="stat-num" id="statT10">0</div><div class="stat-label">Team 10</div></div>
       </div>
+
       <div class="admin-controls">
         <input type="text" id="searchInput" placeholder="Search by name or church…" oninput="renderAdmin()">
         <select id="filterTeam" onchange="renderAdmin()">
           <option value="">All Teams</option>
-          <option>Team 1</option>
-          <option>Team 2</option>
-          <option>Team 3</option>
-          <option>Team 4</option>
-          <option>Team 5</option>
-          <option>Team 6</option>
-          <option>Team 7</option>
-          <option>Team 8</option>
-          <option>Team 9</option>
+          <option>Team 1</option><option>Team 2</option><option>Team 3</option>
+          <option>Team 4</option><option>Team 5</option><option>Team 6</option>
+          <option>Team 7</option><option>Team 8</option><option>Team 9</option>
           <option>Team 10</option>
         </select>
         <select id="filterPaid" onchange="renderAdmin()">
@@ -705,16 +719,20 @@ tr:hover td { background: #fff8f0; }
         </select>
         <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
       </div>
+
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>#</th><th>Name</th><th>Age</th><th>Gender</th><th>Church</th><th>Contact</th><th>Team</th><th>Payment</th><th>Action</th></tr>
+            <tr>
+              <th>#</th><th>Name</th><th>Age</th><th>Gender</th>
+              <th>Church</th><th>Contact</th><th>Team</th>
+              <th>Payment</th><th>Actions</th>
+            </tr>
           </thead>
           <tbody id="adminTable"></tbody>
         </table>
       </div>
       <div class="mobile-cards" id="mobileCards"></div>
-
       <button class="logout" onclick="logoutAdmin()">LOGOUT</button>
     </div>
   </div>
@@ -735,26 +753,14 @@ const firebaseConfig = {
   appId: "1:55497113348:web:a6113f3c00badd13191a51"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const app  = initializeApp(firebaseConfig);
+const db   = getDatabase(app);
 const participantsRef = ref(db, "participants");
-const ADMIN_PASSWORD = "youthadmin123";
+const ADMIN_PASSWORD  = "youthadmin123";
 
-const teams = [
-  { name: "Team 1",  color: "#e3f2fd", text: "#0d47a1", border: "#90caf9" },
-  { name: "Team 2",  color: "#ffebee", text: "#b71c1c", border: "#ef9a9a" },
-  { name: "Team 3",  color: "#fffde7", text: "#f57f17", border: "#fff176" },
-  { name: "Team 4",  color: "#e8f5e9", text: "#1b5e20", border: "#a5d6a7" },
-  { name: "Team 5",  color: "#f3e5f5", text: "#4a148c", border: "#ce93d8" },
-  { name: "Team 6",  color: "#fce4ec", text: "#880e4f", border: "#f48fb1" },
-  { name: "Team 7",  color: "#e0f7fa", text: "#006064", border: "#80deea" },
-  { name: "Team 8",  color: "#fff8e1", text: "#e65100", border: "#ffcc80" },
-  { name: "Team 9",  color: "#efebe9", text: "#3e2723", border: "#bcaaa4" },
-  { name: "Team 10", color: "#e8eaf6", text: "#1a237e", border: "#9fa8da" }
-];
+const TEAMS = ["Team 1","Team 2","Team 3","Team 4","Team 5","Team 6","Team 7","Team 8","Team 9","Team 10"];
 
 let allParticipants = {};
-
 
 // ── Helpers ────────────────────────────────────────────────────
 function showToast(msg, duration = 3000) {
@@ -764,21 +770,24 @@ function showToast(msg, duration = 3000) {
   setTimeout(() => t.classList.remove("show"), duration);
 }
 
-function setError(fieldId, errId, show) {
+function setError(fieldId, errId, doShow) {
   const f = document.getElementById(fieldId);
   const e = document.getElementById(errId);
-  if (show) { f.classList.add("error"); e.classList.add("show"); }
-  else       { f.classList.remove("error"); e.classList.remove("show"); }
-  return !show;
+  if (doShow) { f.classList.add("error"); e.classList.add("show"); }
+  else        { f.classList.remove("error"); e.classList.remove("show"); }
+  return !doShow;
 }
 
 function hide(...ids) { ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = "none"; }); }
-function show(id, display="block") { const el = document.getElementById(id); if (el) el.style.display = display; }
+function show(id, d = "block") { const el = document.getElementById(id); if (el) el.style.display = d; }
 
-// ── Contact validation helper (allows empty) ──────────────────
-function isValidContact(contact) {
-  if (!contact) return true; // optional — empty is fine
-  return /^[\d\s\+\-]{7,15}$/.test(contact);
+function isValidContact(c) {
+  if (!c || c === "—") return true;
+  return /^[\d\s\+\-]{7,15}$/.test(c);
+}
+
+function esc(s) {
+  return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
 // ── Tab switch ─────────────────────────────────────────────────
@@ -787,40 +796,35 @@ window.switchTab = function(tab) {
   document.getElementById("panelGroup").style.display  = tab === "group"  ? "block" : "none";
   document.getElementById("tab-single").classList.toggle("active", tab === "single");
   document.getElementById("tab-group").classList.toggle("active",  tab === "group");
-  if (tab === "group" && document.getElementById("groupRows").children.length === 0) {
-    addGroupRow();
-  }
+  if (tab === "group" && document.getElementById("groupRows").children.length === 0) addGroupRow();
 };
 
-// ── Reset to register ──────────────────────────────────────────
 window.resetToRegister = function () {
-  hide("resultPageWrap", "bulkResultWrap", "adminLoginWrap", "adminPanelWrap");
+  hide("resultPageWrap","bulkResultWrap","adminLoginWrap","adminPanelWrap");
   show("registerPage");
 };
 
 // ── Team balancing ─────────────────────────────────────────────
 async function getBalancedTeam() {
-  const snapshot = await get(participantsRef);
+  const snap = await get(participantsRef);
   const counts = {};
-  teams.forEach(t => { counts[t.name] = 0; });
-  snapshot.forEach(child => {
-    const t = child.val().team;
-    if (counts[t] !== undefined) counts[t]++;
-  });
-  const min = Math.min(...Object.values(counts));
-  const candidates = Object.keys(counts).filter(k => counts[k] === min);
-  return candidates[Math.floor(Math.random() * candidates.length)];
+  TEAMS.forEach(t => { counts[t] = 0; });
+  snap.forEach(c => { const t = c.val().team; if (counts[t] !== undefined) counts[t]++; });
+  const min  = Math.min(...Object.values(counts));
+  const cand = Object.keys(counts).filter(k => counts[k] === min);
+  return cand[Math.floor(Math.random() * cand.length)];
 }
 
 // ── Duplicate check ────────────────────────────────────────────
-async function isDuplicate(name, contact) {
-  const snapshot = await get(participantsRef);
+async function isDuplicate(name, contact, excludeKey = null) {
+  const snap = await get(participantsRef);
   let found = false;
-  snapshot.forEach(child => {
-    const p = child.val();
+  snap.forEach(c => {
+    if (excludeKey && c.key === excludeKey) return;
+    const p = c.val();
     const sameName    = p.name.trim().toLowerCase() === name.trim().toLowerCase();
-    // Only check contact match if both values are non-empty
-    const sameContact = contact && p.contact && p.contact.replace(/\D/g,'') === contact.replace(/\D/g,'');
+    const sameContact = contact && contact !== "—" && p.contact && p.contact !== "—"
+                        && p.contact.replace(/\D/g,"") === contact.replace(/\D/g,"");
     if (sameName || sameContact) found = true;
   });
   return found;
@@ -835,19 +839,18 @@ window.register = async function () {
   const gender  = document.getElementById("gender").value;
 
   let valid = true;
-  valid = setError("name",    "err-name",    !name)                        && valid;
-  valid = setError("age",     "err-age",     !age || age < 1 || age > 99)  && valid;
-  valid = setError("church",  "err-church",  !church)                      && valid;
-  valid = setError("contact", "err-contact", !isValidContact(contact))     && valid; // optional
-  valid = setError("gender",  "err-gender",  !gender)                      && valid;
+  valid = setError("name",    "err-name",    !name)                      && valid;
+  valid = setError("age",     "err-age",     !age||age<1||age>99)        && valid;
+  valid = setError("church",  "err-church",  !church)                    && valid;
+  valid = setError("contact", "err-contact", !isValidContact(contact))   && valid;
+  valid = setError("gender",  "err-gender",  !gender)                    && valid;
   if (!valid) return;
 
   const btn = document.getElementById("submitBtn");
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Checking…';
 
-  const dup = await isDuplicate(name, contact);
-  if (dup) {
+  if (await isDuplicate(name, contact)) {
     btn.disabled = false;
     btn.textContent = "🚧 SUBMIT REGISTRATION";
     showToast("⚠️ You appear to already be registered!", 4000);
@@ -856,8 +859,7 @@ window.register = async function () {
 
   btn.innerHTML = '<span class="spinner"></span> Registering…';
   const teamName = await getBalancedTeam();
-
-  await push(participantsRef, { name, age: Number(age), church, contact: contact || "—", gender, team: teamName, paid: false });
+  await push(participantsRef, { name, age: Number(age), church, contact: contact||"—", gender, team: teamName, paid: false });
 
   hide("registerPage");
   show("resultPageWrap");
@@ -865,28 +867,25 @@ window.register = async function () {
   btn.textContent = "🚧 SUBMIT REGISTRATION";
 };
 
-
 // ── Group registration ─────────────────────────────────────────
 let groupRowCount = 0;
 
 function updateGroupCount() {
   const count = document.getElementById("groupRows").children.length;
-  const el = document.getElementById("groupCount");
-  el.textContent = count === 1 ? "1 person added" : `${count} people added`;
+  document.getElementById("groupCount").textContent =
+    count === 1 ? "1 person added" : `${count} people added`;
 }
 
 function addGroupRow() {
   groupRowCount++;
-  const id = groupRowCount;
-  const container = document.getElementById("groupRows");
-
+  const id  = groupRowCount;
   const row = document.createElement("div");
   row.id = "grow-" + id;
   row.style.cssText = "background:#fff8f0;border:2px solid var(--orange);border-radius:12px;padding:14px 14px 10px;margin-bottom:12px;position:relative;animation:fadeIn 0.2s ease;";
   row.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
       <span style="font-family:'Black Han Sans',sans-serif;font-size:0.85em;color:var(--orange-dk);letter-spacing:0.5px;">👤 PERSON ${id}</span>
-      ${id > 1 ? `<button onclick="removeGroupRow(${id})" style="background:none;border:none;cursor:pointer;font-size:1.1em;color:#aaa;line-height:1;" title="Remove">✕</button>` : ''}
+      ${id > 1 ? `<button onclick="removeGroupRow(${id})" style="background:none;border:none;cursor:pointer;font-size:1.1em;color:#aaa;line-height:1;">✕</button>` : ''}
     </div>
     <div style="display:grid;grid-template-columns:1fr 80px;gap:8px;margin-bottom:8px;">
       <div>
@@ -918,77 +917,62 @@ function addGroupRow() {
     </div>
     <div id="g-err-${id}" style="color:var(--red);font-size:0.78em;font-weight:700;margin-top:6px;display:none;"></div>
   `;
-  container.appendChild(row);
+  document.getElementById("groupRows").appendChild(row);
   updateGroupCount();
-
-  // Focus the name field of the new row
   setTimeout(() => document.getElementById("g-name-" + id)?.focus(), 50);
 }
 
 window.removeGroupRow = function(id) {
-  const el = document.getElementById("grow-" + id);
-  if (el) el.remove();
+  document.getElementById("grow-" + id)?.remove();
   updateGroupCount();
 };
 
-// Wire up add row and submit buttons inside module scope
 document.getElementById("addRowBtn").addEventListener("click", addGroupRow);
 
 document.getElementById("groupSubmitBtn").addEventListener("click", async function () {
-  const btn = this;
-  const container = document.getElementById("groupRows");
-  const rows = container.querySelectorAll("[id^='grow-']");
+  const btn  = this;
+  const rows = document.getElementById("groupRows").querySelectorAll("[id^='grow-']");
+  if (!rows.length) { showToast("⚠️ Add at least one person first."); return; }
 
-  if (rows.length === 0) {
-    showToast("⚠️ Add at least one person first.");
-    return;
-  }
-
-  // Validate all rows first
   let hasError = false;
   const people = [];
+
   for (const row of rows) {
-    const rowId = row.id.replace("grow-", "");
-    const name    = document.getElementById("g-name-"    + rowId)?.value.trim();
-    const age     = document.getElementById("g-age-"     + rowId)?.value.trim();
-    const church  = document.getElementById("g-church-"  + rowId)?.value.trim();
-    const contact = document.getElementById("g-contact-" + rowId)?.value.trim();
-    const gender  = document.getElementById("g-gender-"  + rowId)?.value;
-    const errEl   = document.getElementById("g-err-"     + rowId);
+    const rid     = row.id.replace("grow-","");
+    const name    = document.getElementById(`g-name-${rid}`)?.value.trim();
+    const age     = document.getElementById(`g-age-${rid}`)?.value.trim();
+    const church  = document.getElementById(`g-church-${rid}`)?.value.trim();
+    const contact = document.getElementById(`g-contact-${rid}`)?.value.trim();
+    const gender  = document.getElementById(`g-gender-${rid}`)?.value;
+    const errEl   = document.getElementById(`g-err-${rid}`);
 
     const errs = [];
-    if (!name)    errs.push("name");
-    if (!age || age < 1 || age > 99) errs.push("age");
-    if (!church)  errs.push("church");
-    // Contact is optional — only flag if filled in but invalid
+    if (!name)             errs.push("name");
+    if (!age||age<1||age>99) errs.push("age");
+    if (!church)           errs.push("church");
     if (contact && !/^[\d\s\+\-]{7,15}$/.test(contact)) errs.push("contact (invalid format)");
-    if (!gender)  errs.push("gender");
+    if (!gender)           errs.push("gender");
 
-    // Highlight invalid fields
     ["name","age","church"].forEach(f => {
-      const el = document.getElementById(`g-${f}-${rowId}`);
+      const el = document.getElementById(`g-${f}-${rid}`);
       if (el) el.style.borderColor = errs.some(e => e.startsWith(f)) ? "var(--red)" : "#ddd";
     });
-    // Contact: only highlight red if it has content and is invalid
-    const contactEl = document.getElementById(`g-contact-${rowId}`);
+    const contactEl = document.getElementById(`g-contact-${rid}`);
     if (contactEl) contactEl.style.borderColor = errs.some(e => e.startsWith("contact")) ? "var(--red)" : "#ddd";
-    const genderEl = document.getElementById(`g-gender-${rowId}`);
+    const genderEl = document.getElementById(`g-gender-${rid}`);
     if (genderEl) genderEl.style.borderColor = errs.includes("gender") ? "var(--red)" : "#ddd";
 
-    if (errs.length > 0) {
+    if (errs.length) {
       errEl.textContent = "⚠ Please fill in: " + errs.join(", ");
       errEl.style.display = "block";
       hasError = true;
     } else {
       errEl.style.display = "none";
-      people.push({ name, age: Number(age), church, contact: contact || "—", gender });
+      people.push({ name, age: Number(age), church, contact: contact||"—", gender });
     }
   }
 
-  if (hasError) {
-    showToast("⚠️ Please fix the errors highlighted in red.", 4000);
-    return;
-  }
+  if (hasError) { showToast("⚠️ Please fix the errors highlighted in red.", 4000); return; }
 
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Registering…';
@@ -1005,48 +989,39 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
   btn.disabled = false;
   btn.innerHTML = "🚧 REGISTER ALL";
 
-  // Show success screen
   document.getElementById("bulkSuccessMsg").textContent =
-    `${success} participant${success !== 1 ? "s" : ""} registered!${skipped ? ` (${skipped} skipped — already registered)` : ""}`;
+    `${success} participant${success !== 1 ? "s" : ""} registered!` +
+    (skipped ? ` (${skipped} skipped — already registered)` : "");
   hide("registerPage");
   show("bulkResultWrap");
-
-  // Reset group rows for next use
   document.getElementById("groupRows").innerHTML = "";
   groupRowCount = 0;
 });
 
 // ── Admin login/logout ─────────────────────────────────────────
-window.showAdminLogin = function () {
-  hide("registerPage");
-  show("adminLoginWrap");
-};
+window.showAdminLogin = function () { hide("registerPage"); show("adminLoginWrap"); };
 
 window.loginAdmin = function () {
   if (document.getElementById("adminPassword").value !== ADMIN_PASSWORD) {
-    showToast("❌ Wrong password.");
-    return;
+    showToast("❌ Wrong password."); return;
   }
   hide("adminLoginWrap");
   show("adminPanelWrap");
   startListening();
 };
 
-window.logoutAdmin = function () {
-  hide("adminPanelWrap");
-  show("registerPage");
-};
+window.logoutAdmin = function () { hide("adminPanelWrap"); show("registerPage"); };
 
 // ── Real-time listener ─────────────────────────────────────────
 function startListening() {
-  onValue(participantsRef, snapshot => {
+  onValue(participantsRef, snap => {
     allParticipants = {};
-    snapshot.forEach(child => { allParticipants[child.key] = child.val(); });
+    snap.forEach(c => { allParticipants[c.key] = c.val(); });
     renderAdmin();
   });
 }
 
-// ── Render admin ───────────────────────────────────────────────
+// ── Render admin table ─────────────────────────────────────────
 window.renderAdmin = function () {
   const query      = document.getElementById("searchInput").value.toLowerCase();
   const teamFilter = document.getElementById("filterTeam").value;
@@ -1067,80 +1042,166 @@ window.renderAdmin = function () {
     if (el) el.textContent = all.filter(p => p.team === "Team " + i).length;
   }
 
+  // Desktop table
   const tbody = document.getElementById("adminTable");
   tbody.innerHTML = "";
   filtered.forEach(([key, p], i) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
       <td style="color:#888;font-size:0.8em">${i+1}</td>
       <td style="font-weight:700">${esc(p.name)}</td>
       <td>${p.age}</td>
-      <td>${p.gender || "—"}</td>
+      <td>${esc(p.gender||"—")}</td>
       <td>${esc(p.church)}</td>
       <td>${esc(p.contact||"—")}</td>
       <td style="font-size:0.8em">${esc(p.team)}</td>
       <td>
-        <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}', ${p.paid})">
+        <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}',${p.paid})">
           ${p.paid ? "✔ Paid" : "Unpaid"}
         </button>
       </td>
-      <td><button class="delete-btn" onclick="deleteParticipant('${key}')">Delete</button></td>`;
-    tbody.appendChild(row);
+      <td>
+        <div style="display:flex;gap:5px;align-items:center;">
+          <button class="action-btn edit-btn" onclick="openEditModal('${key}')">✏️ Edit</button>
+          <button class="action-btn delete-btn" onclick="deleteParticipant('${key}')">🗑</button>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
   });
+  if (!filtered.length) {
+    tbody.innerHTML = "<tr><td colspan='9' style='text-align:center;color:#999;padding:20px'>No participants found.</td></tr>";
+  }
 
+  // Mobile cards
   const cards = document.getElementById("mobileCards");
   cards.innerHTML = "";
+  if (!filtered.length) {
+    cards.innerHTML = "<p style='text-align:center;color:#999;padding:20px'>No participants found.</p>";
+    return;
+  }
   filtered.forEach(([key, p]) => {
     const card = document.createElement("div");
     card.className = "participant-card";
     card.innerHTML = `
       <div class="card-name">${esc(p.name)}</div>
-      <div class="card-row">Age: <span>${p.age}</span></div>
-      <div class="card-row">Gender: <span>${p.gender || "—"}</span></div>
+      <div class="card-row">Age: <span>${p.age}</span> &nbsp;·&nbsp; Gender: <span>${esc(p.gender||"—")}</span></div>
       <div class="card-row">Church: <span>${esc(p.church)}</span></div>
       <div class="card-row">Contact: <span>${esc(p.contact||"—")}</span></div>
       <div class="card-row">Team: <span>${esc(p.team)}</span></div>
       <div class="card-actions">
-        <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}', ${p.paid})">
+        <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}',${p.paid})">
           ${p.paid ? "✔ Paid" : "Unpaid"}
         </button>
-        <button class="delete-btn" onclick="deleteParticipant('${key}')">Delete</button>
+        <button class="action-btn edit-btn" onclick="openEditModal('${key}')">✏️ Edit</button>
+        <button class="action-btn delete-btn" onclick="deleteParticipant('${key}')">🗑 Delete</button>
       </div>`;
     cards.appendChild(card);
   });
-
-  if (filtered.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='9' style='text-align:center;color:#999;padding:20px'>No participants found.</td></tr>";
-    cards.innerHTML = "<p style='text-align:center;color:#999;padding:20px'>No participants found.</p>";
-  }
 };
 
+// ── Edit Modal ─────────────────────────────────────────────────
+window.openEditModal = function (key) {
+  const p = allParticipants[key];
+  if (!p) return;
+
+  document.getElementById("editKey").value     = key;
+  document.getElementById("editName").value    = p.name    || "";
+  document.getElementById("editAge").value     = p.age     || "";
+  document.getElementById("editGender").value  = p.gender  || "";
+  document.getElementById("editChurch").value  = p.church  || "";
+  document.getElementById("editContact").value = (p.contact === "—" ? "" : p.contact) || "";
+  document.getElementById("editTeam").value    = p.team    || "Team 1";
+
+  // Clear any previous error styling
+  ["editName","editAge","editGender","editChurch","editContact"].forEach(id => {
+    document.getElementById(id).classList.remove("modal-err");
+  });
+
+  document.getElementById("editModal").classList.add("open");
+  setTimeout(() => document.getElementById("editName").focus(), 80);
+};
+
+window.closeEditModal = function () {
+  document.getElementById("editModal").classList.remove("open");
+};
+
+// Close on backdrop click
+document.getElementById("editModal").addEventListener("click", function(e) {
+  if (e.target === this) closeEditModal();
+});
+
+// Close on Escape
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeEditModal(); });
+
+window.saveEdit = async function () {
+  const key     = document.getElementById("editKey").value;
+  const name    = document.getElementById("editName").value.trim();
+  const ageRaw  = document.getElementById("editAge").value.trim();
+  const gender  = document.getElementById("editGender").value;
+  const church  = document.getElementById("editChurch").value.trim();
+  const contact = document.getElementById("editContact").value.trim();
+  const team    = document.getElementById("editTeam").value;
+  const age     = Number(ageRaw);
+
+  // Validate
+  let hasErr = false;
+  const mark = (id, bad) => {
+    document.getElementById(id).classList.toggle("modal-err", bad);
+    if (bad) hasErr = true;
+  };
+  mark("editName",    !name);
+  mark("editAge",     !ageRaw || age < 1 || age > 99);
+  mark("editGender",  !gender);
+  mark("editChurch",  !church);
+  mark("editContact", !isValidContact(contact));
+
+  if (hasErr) {
+    showToast("⚠️ Please fix the highlighted fields.", 3000);
+    return;
+  }
+
+  const saveBtn = document.getElementById("modalSaveBtn");
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span> Saving…';
+
+  await update(ref(db, "participants/" + key), {
+    name,
+    age,
+    gender,
+    church,
+    contact: contact || "—",
+    team
+  });
+
+  saveBtn.disabled = false;
+  saveBtn.innerHTML = "💾 SAVE CHANGES";
+  closeEditModal();
+  showToast("✅ Delegate updated successfully!");
+};
+
+// ── Paid toggle & delete ───────────────────────────────────────
 window.togglePaid = (key, cur) => update(ref(db, "participants/" + key), { paid: !cur });
 
 window.deleteParticipant = function (key) {
-  if (!confirm("Delete this participant?")) return;
+  if (!confirm("Delete this participant? This cannot be undone.")) return;
   remove(ref(db, "participants/" + key));
+  showToast("🗑 Participant deleted.");
 };
 
-
+// ── Export CSV ─────────────────────────────────────────────────
 window.exportCSV = function () {
   const rows = [["Name","Age","Gender","Church","Contact","Team","Paid"]];
   Object.values(allParticipants).forEach(p => {
     rows.push([p.name, p.age, p.gender||"", p.church, p.contact||"—", p.team, p.paid ? "Yes" : "No"]);
   });
   const csv  = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
-  const blob = new Blob([csv], { type: "text/csv" });
+  const blob = new Blob([csv], { type:"text/csv" });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement("a");
   a.href = url; a.download = "participants.csv"; a.click();
   URL.revokeObjectURL(url);
   showToast("✅ CSV downloaded!");
 };
-
-function esc(str) {
-  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
 </script>
 </body>
 </html>
