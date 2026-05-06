@@ -726,7 +726,11 @@ function esc(s) {
 }
 
 function normalizeChurch(c) {
-  return String(c||"").trim().toLowerCase();
+  return String(c||"").trim().toUpperCase();
+}
+
+function toUpperChurch(c) {
+  return String(c||"").trim().toUpperCase();
 }
 
 // ── Tab switch ─────────────────────────────────────────────────
@@ -826,8 +830,9 @@ window.register = async function() {
   }
 
   btn.innerHTML = '<span class="spinner"></span> Registering…';
-  const teamName = await getChurchAwareTeam(church);
-  await push(participantsRef, { name, age: Number(age), church, contact: contact||"—", gender, team: teamName, paid: false });
+  const churchUpper = toUpperChurch(church);
+  const teamName = await getChurchAwareTeam(churchUpper);
+  await push(participantsRef, { name, age: Number(age), church: churchUpper, contact: contact||"—", gender, team: teamName, paid: false });
 
   hide("registerPage");
   show("resultPageWrap");
