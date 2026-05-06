@@ -225,20 +225,6 @@ button.logout {
 }
 .church-empty { font-size: 0.82em; color: #666; text-align: center; padding: 12px 0; }
 
-/* ══════ RESHUFFLE BUTTON ══════ */
-.btn-reshuffle {
-  width: 100%; padding: 11px 14px;
-  background: #1a237e; color: var(--caution);
-  border: 2.5px solid var(--black); border-radius: 10px;
-  font-family: 'Black Han Sans', sans-serif; font-size: 0.88em;
-  letter-spacing: 1px; cursor: pointer; text-transform: uppercase;
-  box-shadow: 3px 3px 0 var(--black);
-  transition: transform 0.12s, box-shadow 0.12s, opacity 0.2s;
-  margin-bottom: 14px;
-}
-.btn-reshuffle:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--black); }
-.btn-reshuffle:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--black); }
-.btn-reshuffle:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: 3px 3px 0 var(--black); }
 
 /* ══════ ADMIN CONTROLS ══════ */
 .admin-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
@@ -268,6 +254,13 @@ tr:hover td { background: #fff8f0; }
 }
 .paid-badge.paid   { background: #e8f5e9; color: var(--green); }
 .paid-badge.unpaid { background: #fff3e0; color: #e65100; }
+
+.role-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 0.78em; font-weight: 700; cursor: pointer; border: none; font-family: 'Nunito', sans-serif;
+}
+.role-badge.leader { background: #ede7f6; color: #4527a0; }
+.role-badge.member { background: #f5f5f5; color: #555; }
 
 .action-btn { padding: 5px 9px; font-size: 0.78em; border-radius: 6px; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; white-space: nowrap; }
 .edit-btn   { background: #e3f2fd; color: #1565c0; }
@@ -350,30 +343,6 @@ tr:hover td { background: #fff8f0; }
 .modal-cancel { background: var(--black); color: var(--caution); box-shadow: 3px 3px 0 var(--orange-dk); }
 .modal-cancel:hover { opacity: 0.82; }
 
-/* ══════ RESHUFFLE CONFIRM MODAL ══════ */
-#reshuffleModal {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.65); z-index: 2100;
-  align-items: center; justify-content: center; padding: 16px;
-}
-#reshuffleModal.open { display: flex; }
-.reshuffle-box {
-  background: var(--white); border-radius: 18px;
-  border: 3px solid var(--black); box-shadow: 8px 8px 0 var(--black);
-  width: 100%; max-width: 380px; padding: 28px 24px;
-  text-align: center; animation: fadeIn 0.2s ease;
-}
-.reshuffle-box .r-icon { font-size: 2.6em; margin-bottom: 10px; }
-.reshuffle-box h3 { font-family: 'Black Han Sans', sans-serif; font-size: 1.1em; color: var(--black); margin-bottom: 8px; letter-spacing: 0.5px; }
-.reshuffle-box p { font-size: 0.85em; color: #555; line-height: 1.55; margin-bottom: 20px; }
-.reshuffle-box p strong { color: var(--red); }
-.reshuffle-btns { display: flex; gap: 10px; }
-.reshuffle-btns button { flex: 1; padding: 12px; border-radius: 10px; font-family: 'Black Han Sans', sans-serif; font-size: 0.9em; letter-spacing: 1px; cursor: pointer; border: 2.5px solid var(--black); text-transform: uppercase; transition: opacity 0.15s, transform 0.1s; }
-.btn-confirm-reshuffle { background: #1a237e; color: var(--caution); box-shadow: 3px 3px 0 var(--black); }
-.btn-confirm-reshuffle:hover { transform: translate(-1px,-1px); }
-.btn-confirm-reshuffle:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-.btn-cancel-reshuffle { background: var(--black); color: #ccc; }
-.btn-cancel-reshuffle:hover { opacity: 0.82; }
 
 @media (max-width: 540px) {
   .form-body, .result-body, .admin-login-body { padding: 20px 16px; }
@@ -444,6 +413,19 @@ tr:hover td { background: #fff8f0; }
           <option value="Team 9">Team 9</option><option value="Team 10">Team 10</option>
         </select>
       </div>
+      <div class="modal-field">
+        <label>Role</label>
+        <div style="display:flex;gap:10px;margin-top:2px;">
+          <label style="display:flex;align-items:center;gap:7px;font-size:0.9em;font-weight:700;text-transform:none;letter-spacing:0;cursor:pointer;">
+            <input type="radio" name="editRole" id="editRoleMember" value="Member" style="width:auto;padding:0;border:none;accent-color:var(--orange);width:16px;height:16px;cursor:pointer;">
+            Member
+          </label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:0.9em;font-weight:700;text-transform:none;letter-spacing:0;cursor:pointer;">
+            <input type="radio" name="editRole" id="editRoleLeader" value="Leader" style="width:auto;padding:0;border:none;accent-color:var(--orange);width:16px;height:16px;cursor:pointer;">
+            Leader
+          </label>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="modal-save" id="modalSaveBtn" onclick="saveEdit()">💾 SAVE CHANGES</button>
@@ -452,20 +434,6 @@ tr:hover td { background: #fff8f0; }
   </div>
 </div>
 
-<!-- ════════════════════════════════
-     RESHUFFLE CONFIRM MODAL
-════════════════════════════════ -->
-<div id="reshuffleModal" role="dialog" aria-modal="true">
-  <div class="reshuffle-box">
-    <div class="r-icon">🔀</div>
-    <h3>RESHUFFLE ALL TEAMS?</h3>
-    <p>This will reassign <strong>every delegate</strong> to new teams, distributing them evenly by church affiliation. <strong>Current team assignments will be overwritten.</strong></p>
-    <div class="reshuffle-btns">
-      <button class="btn-confirm-reshuffle" id="confirmReshuffleBtn" onclick="executeReshuffle()">✅ YES, RESHUFFLE</button>
-      <button class="btn-cancel-reshuffle" onclick="closeReshuffleModal()">CANCEL</button>
-    </div>
-  </div>
-</div>
 
 
 <!-- ═══════════════════════════════════════════
@@ -637,11 +605,6 @@ tr:hover td { background: #fff8f0; }
         </div>
       </div>
 
-      <!-- RESHUFFLE BUTTON -->
-      <button class="btn-reshuffle" id="reshuffleBtn" onclick="openReshuffleModal()">
-        🔀 RESHUFFLE TEAMS BY CHURCH
-      </button>
-
       <!-- SEARCH / FILTER / EXPORT -->
       <div class="admin-controls">
         <input type="text" id="searchInput" placeholder="Search by name or church…" oninput="renderAdmin()">
@@ -663,7 +626,7 @@ tr:hover td { background: #fff8f0; }
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>#</th><th>Name</th><th>Age</th><th>Gender</th><th>Church</th><th>Contact</th><th>Team</th><th>Payment</th><th>Actions</th></tr>
+            <tr><th>#</th><th>Name</th><th>Age</th><th>Gender</th><th>Church</th><th>Contact</th><th>Team</th><th>Role</th><th>Payment</th><th>Actions</th></tr>
           </thead>
           <tbody id="adminTable"></tbody>
         </table>
@@ -747,43 +710,17 @@ window.resetToRegister = function() {
   show("registerPage");
 };
 
-// ══════════════════════════════════════════════════════════════
-//  CHURCH-AWARE TEAM ASSIGNMENT
-//
-//  Algorithm:
-//  1. Count how many delegates each team already has (total load).
-//  2. Count how many delegates from the SAME CHURCH each team already has.
-//  3. Score each team = (churchCount * BIG_PENALTY) + totalCount
-//     → prefer teams that have FEWEST from the same church first,
-//       break ties by overall team size.
-//  4. Assign to the lowest-score team.
-// ══════════════════════════════════════════════════════════════
-async function getChurchAwareTeam(church) {
+// ── Balanced team assignment (by team size only) ───────────────
+async function getBalancedTeam() {
   const snap = await get(participantsRef);
-  const totalCounts  = {};
-  const churchCounts = {};
-  TEAMS.forEach(t => { totalCounts[t] = 0; churchCounts[t] = 0; });
-
+  const counts = {};
+  TEAMS.forEach(t => { counts[t] = 0; });
   snap.forEach(c => {
-    const p = c.val();
-    if (totalCounts[p.team] !== undefined) {
-      totalCounts[p.team]++;
-      if (normalizeChurch(p.church) === normalizeChurch(church)) {
-        churchCounts[p.team]++;
-      }
-    }
+    const t = c.val().team;
+    if (counts[t] !== undefined) counts[t]++;
   });
-
-  const BIG = NUM_TEAMS + 1; // penalty weight for same-church
-  let bestTeam = TEAMS[0], bestScore = Infinity;
-
-  TEAMS.forEach(t => {
-    const score = churchCounts[t] * BIG + totalCounts[t];
-    if (score < bestScore) { bestScore = score; bestTeam = t; }
-  });
-
-  // If there's a tie, pick randomly among tied teams
-  const tied = TEAMS.filter(t => churchCounts[t] * BIG + totalCounts[t] === bestScore);
+  const min  = Math.min(...Object.values(counts));
+  const tied = TEAMS.filter(t => counts[t] === min);
   return tied[Math.floor(Math.random() * tied.length)];
 }
 
@@ -831,7 +768,7 @@ window.register = async function() {
 
   btn.innerHTML = '<span class="spinner"></span> Registering…';
   const churchUpper = toUpperChurch(church);
-  const teamName = await getChurchAwareTeam(churchUpper);
+  const teamName = await getBalancedTeam();
   await push(participantsRef, { name, age: Number(age), church: churchUpper, contact: contact||"—", gender, team: teamName, paid: false });
 
   hide("registerPage");
@@ -940,7 +877,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
       hasError = true;
     } else {
       errEl.style.display = "none";
-      people.push({ name, age: Number(age), church, contact: contact||"—", gender });
+      people.push({ name, age: Number(age), church: toUpperChurch(church), contact: contact||"—", gender });
     }
   }
 
@@ -953,7 +890,7 @@ document.getElementById("groupSubmitBtn").addEventListener("click", async functi
   for (const p of people) {
     const dup = await isDuplicate(p.name, p.contact!=="—" ? p.contact : "");
     if (dup) { skipped++; continue; }
-    const teamName = await getChurchAwareTeam(p.church);
+    const teamName = await getBalancedTeam();
     await push(participantsRef, { ...p, team: teamName, paid: false });
     success++;
   }
@@ -999,7 +936,7 @@ function startListening() {
 function renderChurchRoster() {
   const churchCounts = {};
   Object.values(allParticipants).forEach(p => {
-    const name = (p.church||"Unknown").trim();
+    const name = toUpperChurch(p.church) || "UNKNOWN";
     churchCounts[name] = (churchCounts[name] || 0) + 1;
   });
 
@@ -1019,98 +956,6 @@ function renderChurchRoster() {
   `).join("");
 }
 
-// ══════════════════════════════════════════════════════════════
-//  RESHUFFLE — church-aware balanced redistribution
-//
-//  Algorithm (offline, deterministic):
-//  1. Group all participants by church (case-insensitive).
-//  2. Sort churches by size descending (biggest first).
-//  3. Round-robin distribute delegates of each church across
-//     teams, cycling through the team with the current fewest
-//     members for each delegate.
-//  This guarantees:
-//    • Max 1 delegate difference between teams overall.
-//    • Delegates of the same church are spread as evenly as
-//      possible across different teams.
-// ══════════════════════════════════════════════════════════════
-window.openReshuffleModal  = function() { document.getElementById("reshuffleModal").classList.add("open"); };
-window.closeReshuffleModal = function() { document.getElementById("reshuffleModal").classList.remove("open"); };
-
-window.executeReshuffle = async function() {
-  const btn = document.getElementById("confirmReshuffleBtn");
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Reshuffling…';
-
-  const allEntries = Object.entries(allParticipants); // [[key, data], ...]
-
-  // Group by normalised church name
-  const churchGroups = {};
-  allEntries.forEach(([key, p]) => {
-    const cn = normalizeChurch(p.church) || "unknown";
-    if (!churchGroups[cn]) churchGroups[cn] = [];
-    churchGroups[cn].push({ key, data: p });
-  });
-
-  // Sort churches by size descending so big churches get spread first
-  const sortedChurches = Object.values(churchGroups).sort((a, b) => b.length - a.length);
-
-  // Team load tracker
-  const teamLoad       = {}; // total members per team
-  const churchTeamLoad = {}; // per-church per-team members
-  TEAMS.forEach(t => { teamLoad[t] = 0; });
-
-  // Helper: pick the best team for a given church
-  function pickTeam(church) {
-    const cn  = normalizeChurch(church);
-    if (!churchTeamLoad[cn]) churchTeamLoad[cn] = {};
-    TEAMS.forEach(t => { if (churchTeamLoad[cn][t] === undefined) churchTeamLoad[cn][t] = 0; });
-
-    const BIG = NUM_TEAMS + 1;
-    let bestTeam = TEAMS[0], bestScore = Infinity;
-    TEAMS.forEach(t => {
-      const score = churchTeamLoad[cn][t] * BIG + teamLoad[t];
-      if (score < bestScore) { bestScore = score; bestTeam = t; }
-    });
-
-    const tied = TEAMS.filter(t => churchTeamLoad[cn][t] * BIG + teamLoad[t] === bestScore);
-    const chosen = tied[Math.floor(Math.random() * tied.length)];
-    return chosen;
-  }
-
-  // Build assignment map: key → new team
-  const assignments = {};
-
-  for (const group of sortedChurches) {
-    for (const { key, data } of group) {
-      const team = pickTeam(data.church);
-      assignments[key] = team;
-      teamLoad[team]++;
-      const cn = normalizeChurch(data.church);
-      if (!churchTeamLoad[cn]) churchTeamLoad[cn] = {};
-      churchTeamLoad[cn][team] = (churchTeamLoad[cn][team] || 0) + 1;
-    }
-  }
-
-  // Write all updates to Firebase
-  const updates = {};
-  Object.entries(assignments).forEach(([key, team]) => {
-    updates[`participants/${key}/team`] = team;
-  });
-
-  try {
-    const dbRef = ref(db, "/");
-    await update(dbRef, updates);
-    btn.disabled = false;
-    btn.innerHTML = "✅ YES, RESHUFFLE";
-    closeReshuffleModal();
-    showToast(`✅ ${allEntries.length} delegates reshuffled across ${NUM_TEAMS} teams!`, 4000);
-  } catch(e) {
-    btn.disabled = false;
-    btn.innerHTML = "✅ YES, RESHUFFLE";
-    showToast("❌ Reshuffle failed. Please try again.", 4000);
-    console.error(e);
-  }
-};
 
 // ── Render admin table ─────────────────────────────────────────
 window.renderAdmin = function() {
@@ -1137,7 +982,7 @@ window.renderAdmin = function() {
   const tbody = document.getElementById("adminTable");
   tbody.innerHTML = "";
   if (!filtered.length) {
-    tbody.innerHTML = "<tr><td colspan='9' style='text-align:center;color:#999;padding:20px'>No participants found.</td></tr>";
+    tbody.innerHTML = "<tr><td colspan='10' style='text-align:center;color:#999;padding:20px'>No participants found.</td></tr>";
   } else {
     filtered.forEach(([key, p], i) => {
       const tr = document.createElement("tr");
@@ -1149,6 +994,11 @@ window.renderAdmin = function() {
         <td>${esc(p.church)}</td>
         <td>${esc(p.contact||"—")}</td>
         <td style="font-size:0.8em">${esc(p.team)}</td>
+        <td>
+          <button class="role-badge ${p.role==='Leader' ? 'leader' : 'member'}" onclick="toggleRole('${key}','${p.role||'Member'}')">
+            ${p.role==='Leader' ? '⭐ Leader' : '👤 Member'}
+          </button>
+        </td>
         <td>
           <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}',${p.paid})">
             ${p.paid ? "✔ Paid" : "Unpaid"}
@@ -1180,7 +1030,11 @@ window.renderAdmin = function() {
       <div class="card-row">Church: <span>${esc(p.church)}</span></div>
       <div class="card-row">Contact: <span>${esc(p.contact||"—")}</span></div>
       <div class="card-row">Team: <span>${esc(p.team)}</span></div>
+      <div class="card-row">Role: <span>${p.role==='Leader' ? '⭐ Leader' : '👤 Member'}</span></div>
       <div class="card-actions">
+        <button class="role-badge ${p.role==='Leader' ? 'leader' : 'member'}" onclick="toggleRole('${key}','${p.role||'Member'}')">
+          ${p.role==='Leader' ? '⭐ Leader' : '👤 Member'}
+        </button>
         <button class="paid-badge ${p.paid ? 'paid' : 'unpaid'}" onclick="togglePaid('${key}',${p.paid})">
           ${p.paid ? "✔ Paid" : "Unpaid"}
         </button>
@@ -1202,6 +1056,7 @@ window.openEditModal = function(key) {
   document.getElementById("editChurch").value  = p.church  || "";
   document.getElementById("editContact").value = (p.contact==="—" ? "" : p.contact) || "";
   document.getElementById("editTeam").value    = p.team    || "Team 1";
+  document.getElementById(p.role === "Leader" ? "editRoleLeader" : "editRoleMember").checked = true;
   ["editName","editAge","editGender","editChurch","editContact"].forEach(id => {
     document.getElementById(id).classList.remove("modal-err");
   });
@@ -1212,8 +1067,7 @@ window.openEditModal = function(key) {
 window.closeEditModal = function() { document.getElementById("editModal").classList.remove("open"); };
 
 document.getElementById("editModal").addEventListener("click", e => { if(e.target===document.getElementById("editModal")) closeEditModal(); });
-document.getElementById("reshuffleModal").addEventListener("click", e => { if(e.target===document.getElementById("reshuffleModal")) closeReshuffleModal(); });
-document.addEventListener("keydown", e => { if(e.key==="Escape") { closeEditModal(); closeReshuffleModal(); } });
+document.addEventListener("keydown", e => { if(e.key==="Escape") closeEditModal(); });
 
 window.saveEdit = async function() {
   const key     = document.getElementById("editKey").value;
@@ -1223,6 +1077,7 @@ window.saveEdit = async function() {
   const church  = document.getElementById("editChurch").value.trim();
   const contact = document.getElementById("editContact").value.trim();
   const team    = document.getElementById("editTeam").value;
+  const role    = document.querySelector('input[name="editRole"]:checked')?.value || "Member";
   const age     = Number(ageRaw);
 
   let hasErr = false;
@@ -1238,7 +1093,7 @@ window.saveEdit = async function() {
   saveBtn.disabled = true;
   saveBtn.innerHTML = '<span class="spinner"></span> Saving…';
 
-  await update(ref(db, "participants/" + key), { name, age, gender, church, contact: contact||"—", team });
+  await update(ref(db, "participants/" + key), { name, age, gender, church: toUpperChurch(church), contact: contact||"—", team, role });
 
   saveBtn.disabled = false;
   saveBtn.innerHTML = "💾 SAVE CHANGES";
@@ -1246,8 +1101,9 @@ window.saveEdit = async function() {
   showToast("✅ Delegate updated successfully!");
 };
 
-// ── Paid toggle & delete ───────────────────────────────────────
+// ── Paid toggle, role toggle & delete ─────────────────────────
 window.togglePaid = (key, cur) => update(ref(db, "participants/" + key), { paid: !cur });
+window.toggleRole = (key, cur) => update(ref(db, "participants/" + key), { role: cur === 'Leader' ? 'Member' : 'Leader' });
 
 window.deleteParticipant = function(key) {
   if (!confirm("Delete this participant? This cannot be undone.")) return;
@@ -1257,9 +1113,9 @@ window.deleteParticipant = function(key) {
 
 // ── Export CSV ─────────────────────────────────────────────────
 window.exportCSV = function() {
-  const rows = [["Name","Age","Gender","Church","Contact","Team","Paid"]];
+  const rows = [["Name","Age","Gender","Church","Contact","Team","Role","Paid"]];
   Object.values(allParticipants).forEach(p => {
-    rows.push([p.name, p.age, p.gender||"", p.church, p.contact||"—", p.team, p.paid ? "Yes" : "No"]);
+    rows.push([p.name, p.age, p.gender||"", p.church, p.contact||"—", p.team, p.role||"Member", p.paid ? "Yes" : "No"]);
   });
   const csv  = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
   const blob = new Blob([csv], { type:"text/csv" });
