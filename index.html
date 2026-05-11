@@ -456,57 +456,18 @@ tr:hover td { background: #fff8f0; }
       <p class="sub">🏗 Under Construction &nbsp;·&nbsp; 1 Cor 3:9 &nbsp;·&nbsp; May 12, 2026</p>
     </div>
     <div style="background:var(--caution);height:10px;border-top:3px solid var(--black);border-bottom:3px solid var(--black);"></div>
-    <div class="tab-bar">
-      <button class="tab-btn active" id="tab-single" onclick="switchTab('single')">👤 Single</button>
-      <button class="tab-btn" id="tab-group" onclick="switchTab('group')">👥 Group Register</button>
-    </div>
 
-    <!-- SINGLE -->
-    <div class="form-body" id="panelSingle">
-      <h2>Register Here</h2>
-      <p class="section-hint">Fill in your details below to secure your spot!</p>
-      <div class="form-group">
-        <label for="name">Full Name <span style="color:var(--red)">*</span></label>
-        <input id="name" type="text" placeholder="Enter your full name" autocomplete="name">
-        <div class="error-msg" id="err-name">Please enter your full name.</div>
-      </div>
-      <div class="form-group">
-        <label for="age">Age <span style="color:var(--red)">*</span></label>
-        <input id="age" type="number" min="1" max="99" placeholder="Enter your age">
-        <div class="error-msg" id="err-age">Please enter a valid age (1–99).</div>
-      </div>
-      <div class="form-group">
-        <label for="church">Church <span style="color:var(--red)">*</span></label>
-        <input id="church" type="text" placeholder="Enter your church">
-        <div class="error-msg" id="err-church">Please enter your church.</div>
-      </div>
-      <div class="form-group">
-        <label for="contact">Contact Number <span style="color:#aaa;font-size:0.85em;font-weight:600;text-transform:none;letter-spacing:0;">(optional)</span></label>
-        <input id="contact" type="tel" placeholder="e.g. 09xxxxxxxxx (optional)" autocomplete="tel">
-        <div class="error-msg" id="err-contact">Please enter a valid contact number (7–15 digits).</div>
-      </div>
-      <div class="form-group">
-        <label for="gender">Gender <span style="color:var(--red)">*</span></label>
-        <select id="gender">
-          <option value="">— Select —</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        <div class="error-msg" id="err-gender">Please select your gender.</div>
-      </div>
-      <button class="btn-primary" id="submitBtn" onclick="register()">🚧 SUBMIT REGISTRATION</button>
-      <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
-    </div>
-
-    <!-- GROUP -->
-    <div class="form-body" id="panelGroup" style="display:none;">
-      <h2>Group Registration</h2>
-      <p class="section-hint">Add participants one by one, then submit all at once.</p>
-      <div id="groupRows"></div>
-      <button id="addRowBtn" type="button" style="width:100%;margin-top:14px;padding:11px;border:2px dashed var(--orange);border-radius:10px;background:#fff8f0;color:var(--orange-dk);font-family:'Black Han Sans',sans-serif;font-size:0.9em;letter-spacing:1px;cursor:pointer;transition:background 0.2s;">➕ ADD ANOTHER PERSON</button>
-      <div id="groupCount" style="text-align:center;margin-top:10px;font-size:0.82em;color:#888;font-weight:700;"></div>
-      <button class="btn-primary" id="groupSubmitBtn">🚧 REGISTER ALL</button>
-      <button class="btn-admin" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
+    <!-- REGISTRATION CLOSED -->
+    <div class="form-body" style="text-align:center;padding:36px 28px 32px;">
+      <div style="font-size:3em;margin-bottom:14px;">🚫</div>
+      <h2 style="font-size:1.35em;margin-bottom:8px;letter-spacing:1px;">REGISTRATION CLOSED</h2>
+      <p style="font-size:0.9em;color:#666;line-height:1.6;margin-bottom:6px;">
+        Registration for the <strong>UFBBC 1-Day Youth Camp</strong> is now closed.
+      </p>
+      <p style="font-size:0.82em;color:#aaa;margin-bottom:28px;">
+        Thank you to everyone who signed up! We can't wait to see you on <strong>May 12, 2026</strong>. 🎉
+      </p>
+      <button class="btn-admin" style="max-width:320px;margin:0 auto;" onclick="showAdminLogin()">🔐 LOGIN AS ADMIN</button>
     </div>
   </div>
   <div class="caution-tape" style="border-radius:0 0 8px 8px;">
